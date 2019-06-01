@@ -97,7 +97,7 @@
         $('#submit').click(function () {
             var pwd= $('#pwd').val();
             $.ajax({
-                url:'/file/checkpass/{{$keyw1}}'
+                url:'/share/checkpass/{{$keyw1}}'
                 ,type:'POST'
                 ,dataType:'json'
                 ,data:{
@@ -107,7 +107,7 @@
                     console.log(response);
                     var data=eval('('+response+')');
                     if(data.code){
-                        location.href='/file/share/{{$keyw1}}';
+                        location.href='/share/{{$keyw1}}';
                     }else{
                         $('#error').show();
                     }

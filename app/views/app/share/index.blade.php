@@ -48,14 +48,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" draggable="false">
+                    <a href="/" draggable="false">
                         <span class="hidden-sm">
-                            <strong>我的分享</strong>
+                            <strong>主页</strong>
                         </span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" draggable="false">
+                    <a href="/grabage" draggable="false">
                         <span class="hidden-sm">
                             <strong>回收站</strong>
                         </span>
@@ -97,36 +97,58 @@
 
 <div class="container">
 
-    <div id="error" style="display: none;">
+    @if(session('share'))
+    <div id="error">
         <div class="alert-wrap ">
             <div class="response yep alert" role="alert">
-                <span id="tiperrortext"><i class="fa fa-check-circle"></i> 数字.txt </span>
+                <span id="tiperrortext"><i class="fa fa-check-circle"></i> {{flash('share')}} </span>
                 <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
         </div>
     </div>
-
+    @endif
 
 
     <div class="main-content">
-        <p>所有文件</p>
+        <div class="action-group">
+            <button class="btn btn-default manda">
+                <i class="fa fa-close"></i>
+                批量取消分享
+            </button>
+        </div>
         <section class="tableblock">
-            <table class="table" width="100%" id="">
+            <table class="table" width="100%">
                 <thead>
                 <tr class="rowa two">
+
+                    <td class="text-center">
+                        <a href="#" title="选择所有" id="selectall" draggable="false">
+                            <i class="fa fa-check fa-lg"></i>
+                        </a>
+                    </td>
+
                     <td class="mini">
                         文件名
                     </td>
                     <td class="mini">
-                        大小
+                        浏览次数
                     </td>
                     <td class="mini">
-                        结束时间
+                        保存次数
                     </td>
                     <td class="mini">
-                        密钥
+                        下载次数
+                    </td>
+                    <td class="mini">
+                        分享时间
+                    </td>
+                    <td class="mini">
+                        失效时间
+                    </td>
+                    <td class="mini">
+                        提取码
                     </td>
                     <td class="mini">
                         链接地址
@@ -140,29 +162,44 @@
 
                 @foreach($shares as $share)
                     <tr class="rowa">
-                        <td class="name">
+
+                        <td class="checkb text-center">
+                            <div class="checkbox checkbox-primary checkbox-circle">
+                                <label class="round-butt">
+                                    <input type="checkbox" name="selecta" class="selecta"
+                                           value="{{ $share->id }}">
+                                </label>
+                            </div>
+                        </td>
+
+                        <td class="mini">
                             {{ $share->name }}
                         </td>
                         <td class="mini">
-                            @if($share->size < 1024)
-                                {{$share->size}}B
-                            @elseif($share->size < 1024 * 1024)
-                                {{round(($share->size / 1024), 2)}}KB
-                            @else
-                                {{round(($share->size / 1024 / 1024), 2)}}MB
-                            @endif
+                            {{ $share->views }}
                         </td>
                         <td class="mini">
-                            {{ $share->endTime }}
+                            {{ $share->saves }}
                         </td>
                         <td class="mini">
-                            {{ $share->key }}
+                            {{ $share->downloads}}
+                        </td>
+                        <td class="mini">
+                            {{ $share->start_time}}
+                        </td>
+                        <td class="mini">
+                            {{ $share->end_time}}
+                        </td>
+                        <td class="mini">
+                            {{ $share->password}}
                         </td>
                         <td class="mini">
                             {{ $share->url}}
                         </td>
                         <td class="mini">
-                            删除
+                            <a class="round-butt butt-mini" href="/share/cancle?ids={{$share->id}}" draggable="false" title="取消">
+                                <i class="fa fa-close"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach
@@ -178,5 +215,19 @@
 </footer>
 <script src="/assets/js/app.min.js"></script>
 <script src="/assets/js/datatables.min.js"></script>
+<script>
+    $(function () {
+        $(".manda").click(function () {
+            var divar = [];
+            var a = $(".selecta:checked");
+            if(a.size()>0){
+                a.each(function() {
+                    divar.push($(this).val())
+                });
+            }
+            window.location.href="/share/cancle?ids="+divar.join(",");
+        });
+    });
+</script>
 </body>
 </html>

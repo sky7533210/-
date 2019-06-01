@@ -48,16 +48,16 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" draggable="false">
+                    <a href="/share" draggable="false">
                         <span class="hidden-sm">
                             <strong>我的分享</strong>
                         </span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" draggable="false">
+                    <a href="/" draggable="false">
                         <span class="hidden-sm">
-                            <strong>回收站</strong>
+                            <strong>主页</strong>
                         </span>
                     </a>
                 </li>
@@ -108,14 +108,24 @@
         </div>
     </div>
 
-
-
     <div class="main-content">
-        <p>已删除文件/p>
+        <div class="action-group">
+            <button class="btn btn-default manda">
+                <i class="fa fa-close"></i>
+                批量永久删除
+            </button>
+        </div>
         <section class="tableblock">
-            <table class="table" width="100%" id="">
+            <table class="table" width="100%">
                 <thead>
                 <tr class="rowa two">
+
+                    <td class="text-center">
+                        <a href="#" title="选择所有" id="selectall" draggable="false">
+                            <i class="fa fa-check fa-lg"></i>
+                        </a>
+                    </td>
+
                     <td class="mini">
                         文件名
                     </td>
@@ -123,10 +133,10 @@
                         大小
                     </td>
                     <td class="mini">
-                        创建时间
+                        删除时间
                     </td>
                     <td class="mini">
-                        删除时间
+                        有效时间
                     </td>
                     <td class="mini">
                         操作
@@ -135,31 +145,28 @@
                 </thead>
                 <tbody>
 
-                @foreach($shares as $share)
+                @foreach($grabages as $grabage)
                     <tr class="rowa">
                         <td class="name">
-                            {{ $share->name }}
+                            {{ $grabage->name }}
                         </td>
                         <td class="mini">
-                            @if($share->size < 1024)
-                                {{$share->size}}B
-                            @elseif($share->size < 1024 * 1024)
-                                {{round(($share->size / 1024), 2)}}KB
+                            @if($grabage->size < 1024)
+                                {{$grabage->size}}B
+                            @elseif($grabage->size < 1024 * 1024)
+                                {{round(($grabage->size / 1024), 2)}}KB
                             @else
-                                {{round(($share->size / 1024 / 1024), 2)}}MB
+                                {{round(($grabage->size / 1024 / 1024), 2)}}MB
                             @endif
                         </td>
                         <td class="mini">
-                            {{ $share->endTime }}
+                            {{ $grabage->del_time }}
                         </td>
                         <td class="mini">
-                            {{ $share->key }}
+                            <?php echo '两天后' ?>
                         </td>
                         <td class="mini">
-                            {{ $share->url}}
-                        </td>
-                        <td class="mini">
-                            删除
+                            永久删除
                         </td>
                     </tr>
                 @endforeach

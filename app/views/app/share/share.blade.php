@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>乌云极简云盘</title>
     <title>Sky云盘</title>
 
     <meta charset="utf-8">
@@ -59,16 +58,18 @@
                 @foreach($files as $file)
                     <li>
                         <a class="btn btn-primary"
-                           href="/file/sharedl/{{base64_encode($file->id)}}">
+                           href="/share/download/{{base64_encode($file->id)}}?keyw={{$keyw}}">
                             <span class="pull-left small">
-                                <i class="fa {{$fa[$file->type]}} fa-2x"></i> {{$file->name}}
+                                <i class="fa {{key_exists($file->type,$fa)? $fa[$file->type]:'fa-file-o'}} fa-2x"></i> {{$file->name}}
                             </span>
                             <span class="pull-right small">
-                                <?php
-                                if ($file->size < 1024) echo $file->size . 'B';
-                                else if ($file->size < 1024 * 1024) echo round(($file->size / 1024), 2) . 'KB';
-                                else echo round(($file->size / 1024 / 1024), 2) . 'MB'
-                                ?>
+                                 @if($file->size < 1024)
+                                    {{$file->size}}B
+                                @elseif($file->size < 1024 * 1024)
+                                    {{round(($file->size / 1024), 2)}}KB
+                                @else
+                                    {{round(($file->size / 1024 / 1024), 2)}}MB
+                                @endif
                                 <i class="fa fa-download fa-2x"></i>
                             </span>
                         </a>
@@ -85,6 +86,7 @@
             © 2019        </span>
     </div>
 </footer>
+<script src="/assets/js/jquery-1.12.4.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
 </body>
 </html>

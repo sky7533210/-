@@ -41,35 +41,33 @@ Router::get('/file/list','FilesController@fileList');
 Router::get('/file/upload','FilesController@checkUpload');
 
 Router::post('/file/upload','FilesController@upload');
-
 Router::post('/file/checkmd5','FilesController@checkMd5');
-
 Router::post('/file/createdir','FilesController@createDir');
-
 Router::get('/file/delete','FilesController@delete');
-
 Router::post('/file/rename','FilesController@rename');
-
 Router::post('/file/move','FilesController@move');
-
 Router::get('/file/download/{id}','FilesController@download');
 
-Router::post('/file/share','FilesController@createShareLink');
 
-Router::get('/file/share/{id}','FilesController@shareView');
 
-Router::post('/file/checkpass/{id}','FilesController@checkPass');
+Router::get('/share','ShareController@index');
+Router::get('/share/home','ShareController@index');
+Router::get('/share/cancle','ShareController@cancle');
+Router::post('/share/checkpass/{id}','ShareController@checkPass');
+Router::get('/share/download/{id}','ShareController@download');
+Router::post('/share/createlink','ShareController@createShareLink');
+Router::get('/share/{id}','ShareController@shareView');
 
-Router::get('/file/sharedl/{id}','FilesController@downloadShare');
 
-Router::get('/file/myshare','FilesController@myShare');
 
-Router::get('/file/grabage','FilesController@grabage');
+Router::get('/grabage','GrabageController@index');
+Router::get('/grabage/home','GrabageController@index');
+
+
 
 Router::get('/admin','AdminController@index');
 Router::get('/admin/index','AdminController@index');
 Router::get('/admin/home','AdminController@index');
-
 Router::get('/admin/login','AdminController@login');
 Router::post('/admin/login', 'AdminController@login_check');
 Router::get('/admin/logout','AdminController@logout');

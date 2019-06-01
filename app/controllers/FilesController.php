@@ -6,12 +6,6 @@
  * Date: 2019/4/23
  * Time: 8:17
  */
-/*@if($file->type=='.mp3') href="javascript: alert(1111);"
-                                   @elseif($file->type=='.mp4') href="javascript: alert(222);"
-                                   @elseif($file->type=='.jpg') href="javascript: alert(333);"
-                                   @else href="javascript: alert(444);"
-                                   @endif*/
-
 class FilesController extends Controller
 {
     protected $access_control = true;//设置是否开启访问权限控制，如要开启必须设置
@@ -74,35 +68,15 @@ class FilesController extends Controller
         }
         return $result;
     }
-    public function myShare(){
-        $username=session('user')->username;
-        $userid=session('user')->user_id;
-        $sql='select * from `share_file` where user_id='.$userid;
-        $db=new DB();
-        $db->query($sql);
-
-
-        return view('app/files/myshare',compact('username'));
-    }
-
-    public function grabage(){
-        $username=session('user')->username;
-        $userid=session('user')->id;
-        //$sql='select * from `share_file` where user_id='.$userid;
-        //$db=new DB();
-       // $db->query($sql);
-
-        return view('app/files/grabage',compact('username'));
-    }
 
     //获取文件列表
     private function fileList($parentid)
     {
         $db = new DB();
         $user = session("user");
-        $dirs = $db->query('select id ,name ,create_time from `vir_file` where user_id=' . $user->id . ' and parent_id="' . $parentid . '" and type="-1"');
+        $dirs = $db->query('select id ,name ,create_time from `vir_file` where user_id=' . $user->id . ' and parent_id="' . $parentid . '" and type="-1" and isdel=0');
 
-        $files = $db->query('select id ,name ,size ,type,md5,create_time from `vir_file` where user_id=' . $user->id . ' and parent_id="' . $parentid . '" and type!="-1"');
+        $files = $db->query('select id ,name ,size ,type,md5,create_time from `vir_file` where user_id=' . $user->id . ' and parent_id="' . $parentid . '" and type!="-1" and isdel=0');
 
         $info = new stdClass();
         $info->username = $user->username;
@@ -195,16 +169,8 @@ class FilesController extends Controller
     {
         $parentid = $_GET['parentid'];
         $userid = session('user')->id;
-        if (array_key_exists('id', $_GET)) {
-            $id = $_GET['id'];
-            $sql = 'delete from `vir_file` where user_id=' . $userid . ' and id=' . $id;
-        } else {
-            $ids = $_GET['ids'];
-            $sql = 'delete from `vir_file` where user_id=' . $userid . ' and id in(' . $ids . ')';
-            (new DB())->query($sql);
-            echo 'ok';
-            return;
-        }
+        $ids = $_GET['ids'];
+        $sql = 'update `vir_file` set isdel=1,del_time="'.date('y-m-d h:m:s').'" where user_id=' . $userid . ' and id in(' . $ids . ')';
         (new DB())->query($sql);
         return redirect('/home?parentid=' . $parentid);
     }
@@ -260,100 +226,4 @@ class FilesController extends Controller
         $stream->start();
     }
 
-    public function downloadShare($id){
-        $id = base64_decode($id);
-        $sql = 'select * from `vir_file` where id=' . $id;
-        $db = new DB();
-        $virFile = $db->find($sql);
-        $stream = new FileDownloadService('assets/uploads/' . $virFile->md5 . $virFile->type, $virFile->name, true);
-        $stream->start();
-    }
-    //生成一个keyw把它异或加密一下，再base64编码
-    public function createShareLink()
-    {
-        $virids = $_POST['atts'];
-        $limitTime = $_POST['time'];
-        $userid = session('user')->id;
-        $password = '';
-        if (array_key_exists('pass', $_POST))
-            $password = $_POST['pass'];
-        $db = new DB();
-        $keyw = uniqid();
-        switch ($limitTime){
-            case '1':
-                $endtime=strtotime('+1 day');
-                break;
-            case '2':
-                $endtime=strtotime('+7 day');
-                break;
-            case '3':
-                $endtime=strtotime('+10 year');
-                break;
-        }
-        $db->save('share_file', ['keyw' => $keyw, 'user_id' => $userid, 'end_time' => date('y-m-d h:m:s',$endtime), 'password' => $password, 'vir_ids' => $virids]);
-        echo base64_encode($this->xor_enc($keyw, 'sky'));
-        return;
-    }
-    public function shareView($keyw1)
-    {
-        $keyw = $this->xor_enc(base64_decode($keyw1), 'sky');
-        $sql = 'select * from `share_file` where keyw="' . $keyw . '"';
-        $db = new DB();
-        $virFile = $db->find($sql);
-
-        if($virFile&&strtotime($virFile->end_time)>time()){
-            $sql='select username from `user` where id='.$virFile->user_id;
-            $user = $db->find($sql);
-            $username=$user->username;
-            if ($virFile->password == '') {
-                //查出分享的列表
-                $sql = 'select id,name,size,type from `vir_file` where id in (' . $virFile->vir_ids . ')';
-                $files = $db->query($sql);
-                $fa = $this->fontAwesome;
-                return view('app/files/share', compact('files', 'fa','username'));
-            } else {
-                $id_= session('isPass');
-                if($id_&&$id_==$keyw) {
-                    $sql = 'select id,name,size,type from `vir_file` where id in (' . $virFile->vir_ids . ')';
-                    $files = $db->query($sql);
-                    $fa = $this->fontAwesome;
-                    return view('app/files/share', compact('files', 'fa', 'username'));
-                }
-                else
-                    return view('app/files/sharePass', compact('keyw1','username'));
-            }
-        }else{
-            return view('app/files/error');
-        }
-    }
-
-    public function checkPass($keyw1)
-    {
-        $pwd = $_POST['pwd'];
-        $keyw = $this->xor_enc(base64_decode($keyw1), 'sky');
-        $sql = 'select * from `share_file` where keyw="' . $keyw . '" and password="' . $pwd . '"';
-        $db = new DB();
-        $virFile = $db->find($sql);
-        if ($virFile) {
-            //查出分享的列表
-            session('isPass',$keyw);
-            echo json_encode('{"code":1}');
-            return;
-        } else {
-            echo json_encode('{"code":0}');
-            return;
-        }
-    }
-
-//异或加密
-    function xor_enc($str, $key)
-    {
-        $crytxt = '';
-        $keylen = strlen($key);
-        for ($i = 0; $i < strlen($str); $i++) {
-            $k = $i % $keylen;
-            $crytxt .= $str[$i] ^ $key[$k];
-        }
-        return $crytxt;
-    }
 }

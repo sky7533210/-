@@ -48,14 +48,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/file/myshare" draggable="false">
+                    <a href="/share" draggable="false">
                         <span class="hidden-sm">
                             <strong>我的分享</strong>
                         </span>
                     </a>
                 </li>
                 <li>
-                    <a href="/file/grabage" draggable="false">
+                    <a href="/grabage" draggable="false">
                         <span class="hidden-sm">
                             <strong>回收站</strong>
                         </span>
@@ -280,7 +280,7 @@
                         </td>
                         <td class="del text-center hidden-xs">
                             <a class="round-butt butt-mini" data-name="{{$dir->name}}"
-                               href="/file/delete?id={{$dir->id}}&parentid={{$parentid}}" draggable="false">
+                               href="/file/delete?ids={{$dir->id}}&parentid={{$parentid}}" draggable="false">
                                 <i class="fa fa-trash-o"></i>
                             </a>
                         </td>
@@ -458,7 +458,7 @@
                             <td class="text-center">
                                 <div class="del hidden-xs">
                                     <a class="round-butt butt-mini" data-name="{{$file->name}}"
-                                       href="/file/delete?id={{$file->id}}&parentid={{$parentid}}" draggable="false">
+                                       href="/file/delete?ids={{$file->id}}&parentid={{$parentid}}" draggable="false">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>
@@ -467,9 +467,10 @@
                                        draggable="false">
                                         <i class="fa fa-cog"></i>
                                     </a>
+                                    <!--手机模式时出现-->
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li>
-                                            <a href="download/dXBsb2Fkcy9jb25maWcuanNvbg==/h/730b995353a85ab8306d8e91cbda2e17"
+                                            <a href="/file/download/{{base64_encode($file->id)}}?a=dl"
                                                draggable="false">
                                                 <i class="fa fa-cloud-download"></i>
                                                 下载 </a>
@@ -483,7 +484,7 @@
                                                 重命名 </a>
                                         </li>
                                         <li class="del">
-                                            <a href="/file/delete"
+                                            <a href="/file/delete?ids={{$file->id}}&parentid={{$parentid}}"
                                                data-name="{{$file->name}}" draggable="false">
                                                 <i class="fa fa-trash-o"></i>
                                                 删除 </a>
