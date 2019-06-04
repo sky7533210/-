@@ -28,12 +28,16 @@
     <link rel="stylesheet" href="/assets/skins/vfm-2016.css">
 
 </head>
-<body id="uparea" class="vfm-body inlinethumbs">
-<div class="overdrag"></div>
-
+<body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-vfm-menu">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="javascript:;" draggable="false">sky云盘</a>
         </div>
         <div class="collapse navbar-collapse" id="collapse-vfm-menu">
@@ -109,102 +113,156 @@
         </div>
     </div>
     @endif
-
-
     <div class="main-content">
-        <div class="action-group">
-            <button class="btn btn-default manda">
-                <i class="fa fa-close"></i>
-                批量取消分享
-            </button>
-        </div>
-        <section class="tableblock">
-            <table class="table" width="100%">
-                <thead>
-                <tr class="rowa two">
 
-                    <td class="text-center">
-                        <a href="#" title="选择所有" id="selectall" draggable="false">
-                            <i class="fa fa-check fa-lg"></i>
-                        </a>
-                    </td>
+        <p>我分享过的文件</p>
+        <section class="vfmblock tableblock ghost ghost-hidden">
+            <div class="action-group">
+                <div class="btn-group">
+                    <button class="btn btn-default manda multic">
+                        <i class="fa fa-cog"></i>
+                        取消分享
+                    </button>
+                </div> <!-- .btn-group -->
+            </div> <!-- .action-group -->
 
-                    <td class="mini">
-                        文件名
-                    </td>
-                    <td class="mini">
-                        浏览次数
-                    </td>
-                    <td class="mini">
-                        保存次数
-                    </td>
-                    <td class="mini">
-                        下载次数
-                    </td>
-                    <td class="mini">
-                        分享时间
-                    </td>
-                    <td class="mini">
-                        失效时间
-                    </td>
-                    <td class="mini">
-                        提取码
-                    </td>
-                    <td class="mini">
-                        链接地址
-                    </td>
-                    <td class="mini">
-                        操作
-                    </td>
-                </tr>
-                </thead>
-                <tbody>
-
-                @foreach($shares as $share)
-                    <tr class="rowa">
-
-                        <td class="checkb text-center">
-                            <div class="checkbox checkbox-primary checkbox-circle">
-                                <label class="round-butt">
-                                    <input type="checkbox" name="selecta" class="selecta"
-                                           value="{{ $share->id }}">
-                                </label>
-                            </div>
-                        </td>
-
-                        <td class="mini">
-                            {{ $share->name }}
-                        </td>
-                        <td class="mini">
-                            {{ $share->views }}
-                        </td>
-                        <td class="mini">
-                            {{ $share->saves }}
-                        </td>
-                        <td class="mini">
-                            {{ $share->downloads}}
-                        </td>
-                        <td class="mini">
-                            {{ $share->start_time}}
-                        </td>
-                        <td class="mini">
-                            {{ $share->end_time}}
-                        </td>
-                        <td class="mini">
-                            {{ $share->password}}
-                        </td>
-                        <td class="mini">
-                            {{ $share->url}}
-                        </td>
-                        <td class="mini">
-                            <a class="round-butt butt-mini" href="/share/cancle?ids={{$share->id}}" draggable="false" title="取消">
-                                <i class="fa fa-close"></i>
+            <form id="tableform">
+                <table class="table " width="100%" id="sort">
+                    <thead>
+                    <tr class="rowa one">
+                        <td class="text-center">
+                            <a href="#" title="选择所有" id="selectall" draggable="false">
+                                <i class="fa fa-check fa-lg"></i>
                             </a>
                         </td>
+                        <td class="mini h-filename">
+                        <span class="visible-xs sorta nowrap">
+                            <i class="fa fa-sort-alpha-asc"></i>
+                        </span>
+                            <span class="sorta nowrap hidden-xs">
+                            文件名                            </span>
+                        </td>
+                        <td class="taglia reduce mini h-filesize hidden-xs">
+                        <span class="text-center sorta nowrap">
+                            浏览数                           </span>
+                        </td>
+                        <td class="reduce mini h-filesize hidden-xs">
+                        <span class="text-center sorta nowrap">
+                            保存数                            </span>
+                        </td>
+                        <td class="reduce mini h-filesize hidden-xs">
+                        <span class="text-center sorta nowrap">
+                            下载数</span>
+                        </td>
+                        <td class="reduce mini h-filedate hidden-xs">
+                        <span class="text-center sorta nowrap">
+                            分享时间</span>
+                        </td>
+                        <td class="reduce mini h-filesize hidden-xs">
+                        <span class="text-center sorta nowrap">
+                            有效期</span>
+                        </td>
+                        <td class="reduce mini h-filesize">
+                        <span class="text-center nowrap">
+                            提取码</span>
+                        </td>
+                        <td class="reduce mini h-filesize">
+                        <span class="text-center nowrap">
+                            链接地址</span>
+                        </td>
+                        <td class="mini text-center gridview-hidden">
+                            <i class="fa fa-trash-o"></i>
+                        </td>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="gridbody">
+
+
+                    @foreach($shares as $share)
+                        <tr class="rowa">
+                            <td class="checkb text-center">
+                                <div class="checkbox checkbox-primary checkbox-circle">
+                                    <label class="round-butt">
+                                        <input type="checkbox" name="selecta" class="selecta"
+                                               value="{{ $share->id }}">
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="name" data-order="{{ $share->name }}" data-filter="{{ $share->name }}">
+                                <div class="relative">
+                                    {{ $share->name }}
+                                </div>
+                            </td>
+
+                            <td class="mini nowrap hidden-xs" data-order="{{$share->views}}">
+                            <span class="text-center">
+                              {{$share->views}}
+                            </span>
+                            </td>
+
+                            <td class="mini nowrap hidden-xs" data-order="{{$share->saves}}">
+                            <span class="text-center">
+                              {{$share->saves}}
+                            </span>
+                            </td>
+
+                            <td class="mini nowrap hidden-xs" data-order="{{$share->downloads}}">
+                            <span class="text-center">
+                              {{$share->downloads}}
+                            </span>
+                            </td>
+
+                            <td class="mini hidden-xs nowrap" data-order="{{ $share->start_time}}">
+                            <span class="text-center">
+                              {{ $share->start_time}}
+                            </span>
+                            </td>
+
+                            <td class="mini hidden-xs nowrap" data-order="{{ $share->end_time}}">
+                            <span class="text-center">
+                                <?php
+                                $time = strtotime($share->end_time) - time();
+                                if($time>0)
+                                    if ($time > 24 * 3600)
+                                        echo round($time / 24 / 3600) . '天';
+                                    else if ($time > 3600)
+                                        echo round($time / 3600) . '小时';
+                                    else echo round($time / 60) . '分钟';
+                                else
+                                    echo '已失效';
+                                ?>
+                            </span>
+                            </td>
+
+                            <td class="mini nowrap" data-order="{{ $share->password}}">
+                            <span class="text-center">
+                              {{ $share->password}}
+                            </span>
+                            </td>
+
+                            <td class="mini nowrap" data-order="{{ $share->url}}">
+                            <span class="text-center">
+                              {{ $share->url}}
+                            </span>
+                            </td>
+
+                            <td class="icon text-center">
+                                <div class="del">
+                                    <a class="round-butt butt-mini" data-name="{{$share->name}}"
+                                       href="/share/cancle?ids={{$share->id}}" draggable="false" title="取消分享">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+
+
+                    </tbody>
+                </table>
+            </form>
+
+
         </section>
     </div> <!-- .main-content -->
 </div> <!-- .container -->
@@ -213,21 +271,41 @@
         <span class="pull-left">Sky云网&copy;2019</span>
     </div>
 </footer>
+
+<div class="modal fade deletemulti" id="deletemulti" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <p class="modal-title">
+                    已经选择的文件:
+                    <span class="numfiles badge badge-danger"></span>
+                </p>
+            </div>
+            <div class="text-center modal-body">
+                <form id="delform">
+                    <a class="btn btn-primary btn-lg centertext bigd removelink" href="#" draggable="false">
+                        <i class="fa fa-trash-o fa-5x"></i></a>
+                    <p class="delresp"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="/assets/js/app.min.js"></script>
 <script src="/assets/js/datatables.min.js"></script>
 <script>
-    $(function () {
-        $(".manda").click(function () {
-            var divar = [];
-            var a = $(".selecta:checked");
-            if(a.size()>0){
-                a.each(function() {
-                    divar.push($(this).val())
-                });
-            }
-            window.location.href="/share/cancle?ids="+divar.join(",");
-        });
-    });
+    setupDelete(
+        "你将取消分享这个文件",
+        "你将取消分享这些文件",
+        true,
+        123,
+        "cf1c355d8e28c8ebeabf6b5dab20ea07",
+        "/share/cancle",
+        "请至少选择一个文件");
 </script>
 </body>
 </html>

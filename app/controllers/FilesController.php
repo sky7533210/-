@@ -55,7 +55,7 @@ class FilesController extends Controller
 
     private function getFolderTree($v)
     {
-        $sql = 'select id , name from `vir_file` where parent_id="' . $v->id . '" and type="-1"';
+        $sql = 'select id , name from `vir_file` where parent_id="' . $v->id . '" and type="-1" and isdel=0 and user_id='.session('user')->id;
         $db = new DB();
         $result = $db->query($sql);
         if (!$result) {

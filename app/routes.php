@@ -57,12 +57,14 @@ Router::post('/share/checkpass/{id}','ShareController@checkPass');
 Router::get('/share/download/{id}','ShareController@download');
 Router::post('/share/createlink','ShareController@createShareLink');
 Router::get('/share/{id}','ShareController@shareView');
+Router::post('/share/save','ShareController@save');
 
 
 
 Router::get('/grabage','GrabageController@index');
 Router::get('/grabage/home','GrabageController@index');
-
+Router::get('/grabage/delete','GrabageController@delete');
+Router::get('/grabage/restore','GrabageController@restore');
 
 
 Router::get('/admin','AdminController@index');

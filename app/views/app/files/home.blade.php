@@ -34,6 +34,12 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-vfm-menu">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="javascript:;" draggable="false">sky云盘</a>
         </div>
         <div class="collapse navbar-collapse" id="collapse-vfm-menu">
@@ -423,11 +429,11 @@
 
                             <td class="name" data-order="{{ $file->name }}" data-filter="{{ $file->name }}">
                                 <div class="relative">
-                                    <a href="/file/download/{{base64_encode($file->id)}}?a=dl"
+                                    <a href="javascript:;"
                                        class="full-lenght item file" draggable="false">{{ $file->name }}</a>
                                     <div class="grid-item-title">{{ $file->name }}</div>
 
-                                    <span class="hover"><i class="fa fa-download fa-fw"></i></span><!--下载按钮-->
+                                    <span class="hover"><a href="/file/download/{{base64_encode($file->id)}}?a=dl" class="fa fa-download fa-fw"></a></span><!--下载按钮-->
                                 </div>
                             </td>
 
@@ -748,12 +754,12 @@
 
 <script type="text/javascript">
     setupDelete(
-        "你将永久删除这个项目",
-        "你将永久删除这些文件",
+        "确认要把所选文件放入回收站吗?删除的文件可在10天内通过回收站还原",
+        "确认要把所选文件放入回收站吗?删除的文件可在10天内通过回收站还原",
         true,
             {{$parentid}},
         "cf1c355d8e28c8ebeabf6b5dab20ea07",
-        18686983320,
+        "/file/delete",
         "请至少选择一个文件");
 </script>
 
@@ -780,12 +786,6 @@
         </div>
     </div>
 </div>
-
-
-<script type="text/javascript">
-    var script_url = "http:\/\/www.p2.com\/";
-    var baselink = "download/";
-</script>
 
 
 <!--视频图片播放模态框-->

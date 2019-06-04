@@ -214,7 +214,7 @@
                         $('#captcha').attr('src', '/captcha?'+Math.random());
                         $('#authcode').val('');
                     }else{
-                        window.location.href="/home";
+                        window.location.href="{{$url}}";
                     }
                 }
             });

@@ -17,7 +17,11 @@ class UsersController extends Controller
         if(session('user')){
             return redirect('/home');
         }
-        return view('app/users/login');
+        if(key_exists('url',$_GET))
+            $url=$_GET['url'];
+        else
+            $url='/home';
+        return view('app/users/login',compact('url'));
     }
     public function findPsw()
     {
@@ -107,10 +111,10 @@ class UsersController extends Controller
         }
 
         $smscode= mt_rand(99999,999999);
-        //$client = new  SmsService('https://sms_developer.zhenzikj.com', "101275", "3905025b-e034-4530-ae67-0aa2a4a1b36d");
-        //$result = $client->send($phone, '您的验证码为'.$smscode.'，有效时间为5分钟');
+        $client = new  SmsService('https://sms_developer.zhenzikj.com', "101275", "3905025b-e034-4530-ae67-0aa2a4a1b36d");
+        $result = $client->send($phone, '您的验证码为'.$smscode.'，有效时间为5分钟');
 
-        $result='{"code":0,"smscode":"'.$smscode.'"}';
+        //$result='{"code":0,"smscode":"'.$smscode.'"}';
         $json=json_decode($result);
         if($json->code==0){
             $arr = array(

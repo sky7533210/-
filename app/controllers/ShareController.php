@@ -11,7 +11,7 @@ class ShareController extends Controller
     protected $access_control = true;//设置是否开启访问权限控制，如要开启必须设置
 
     protected $accessible_list = [
-        ''
+        'shareView','download','checkPass'
     ];//设置允许未登录访问的操作（即控制器中的方法）
 
     protected $login_identifier = 'user';//设置session中的登录检测标识，根据编码设置
@@ -31,7 +31,7 @@ class ShareController extends Controller
 
         foreach ($shares as $share){
             $ids=explode(',',$share->vir_ids);
-            $sql='select name from `vir_file` where id='.$ids[0];
+            $sql='select name from `vir_file` where id='.$ids[0].' and isdel=0';
             $result=$db->find($sql);
             if($result) {
                 $name = $result->name;
@@ -59,11 +59,23 @@ class ShareController extends Controller
         $sql = 'select * from `share_file` where keyw="' . $keyw . '"';
         $db = new DB();
         $virFile = $db->find($sql);
-
+        $url='/share/'.$keyw1;
         if($virFile&&strtotime($virFile->end_time)>time()){
             $sql='select username from `user` where id='.$virFile->user_id;
             $user = $db->find($sql);
-            $username=$user->username;
+            $sharename=$user->username;
+
+            //判断是否已经登录，如果登入需要把文件夹树获取出来，可以保存到自己网盘
+            $folderTree='';
+            if(session('user')){
+                $folderTree = session('folderTree');
+                if (!$folderTree) {
+                    $v = new stdClass();
+                    $v->id = '0';
+                    $folderTree = $this->getFolderTree($v);
+                }
+            }
+
             if ($virFile->password == '') {
                 //查出分享的列表
                 $sql = 'select id,name,size,type from `vir_file` where id in (' . $virFile->vir_ids . ')';
@@ -73,7 +85,9 @@ class ShareController extends Controller
 
                 $fa = $this->fontAwesome;
                 $keyw=$keyw1;
-                return view('app/files/share', compact('files', 'fa','username','keyw'));
+                $endtime=$virFile->end_time;
+
+                return view('app/share/share', compact('endtime','files', 'fa','sharename','keyw','url','folderTree'));
             } else {
                 $id_= session('isPass');
                 if($id_&&$id_==$keyw) {
@@ -85,7 +99,7 @@ class ShareController extends Controller
 
                     $fa = $this->fontAwesome;
                     $keyw=$keyw1;
-                    return view('app/share/share', compact('files', 'fa', 'username','keyw'));
+                    return view('app/share/share', compact('files', 'fa', 'username','keyw','url'));
                 }
                 else
                     return view('app/share/sharePass', compact('keyw1','username'));
@@ -93,6 +107,22 @@ class ShareController extends Controller
         }else{
             return view('app/files/error');
         }
+    }
+
+    private function getFolderTree($v)
+    {
+        $sql = 'select id , name from `vir_file` where parent_id="' . $v->id . '" and type="-1" and isdel=0 and user_id='.session('user')->id;
+        $db = new DB();
+        $result = $db->query($sql);
+        if (!$result) {
+            $v->next = null;
+            return;
+        }
+        $v->next = $result;
+        foreach ($result as $value) {
+            $this->getFolderTree($value);
+        }
+        return $result;
     }
 
     //生成一个keyw把它异或加密一下，再base64编码
@@ -156,6 +186,33 @@ class ShareController extends Controller
         return redirect('/share/home');
     }
 
+    public function save(){
+        $id=$_POST['id'];
+        $dest=$_POST['dest'];
+
+        $db=new DB();
+
+        $ids=explode(',',$id);
+
+        $result='';
+        foreach ($ids as $id){
+            $sql='select * from `vir_file` where id='.$id;
+            $vir_file=$db->find($sql);
+            $result=(new DB())->save('vir_file',['user_id'=>session('user')->id,
+                'md5'=>$vir_file->md5,'name'=>$vir_file->name,'size'=>$vir_file->size,
+                'type'=>$vir_file->type,'parent_id'=>$dest,
+                'create_time'=>date('y-m-d h:m:s')]);
+        }
+        if ($result){
+            $keyw = $this->xor_enc(base64_decode($_POST['keyw']), 'sky');
+            $sql='update `share_file` set saves=saves+1 where keyw="'.$keyw.'"';
+            $db->query($sql);
+            echo 'ok';
+        }
+        else
+            echo 'fail';
+        return;
+    }
 
     //验证分享的提取码是否
     public function checkPass($keyw1)
