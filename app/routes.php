@@ -66,6 +66,16 @@ Router::post('/admin/login', 'AdminController@login_check');
 Router::get('/admin/logout','AdminController@logout');
 Router::get('/admin/welcome','AdminController@welcome');
 Router::get('/admin/memberlist','AdminController@memberlist');
+Router::post('/admin/memberlist','AdminController@getmemberlist');
+
+Router::get('/admin/filelist','AdminController@filelist');
+Router::post('/admin/filelist','AdminController@getfilelist');
+
+Router::get('/admin/changestatus','AdminController@changeStatus');
+Router::get('/admin/membereidt','AdminController@memberEdit');
+Router::post('/admin/membereidt','AdminController@memberEditAction');
+Router::post('/admin/memberquery','AdminController@memberQuery');
+Router::get('/admin/echartsuser','AdminController@echartUser');
 
 //in app/routes.php 路由 /captcha
 Router::get('/captcha', function(){

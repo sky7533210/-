@@ -45,13 +45,12 @@ class UsersController extends Controller
                 echo json_encode("{success:0,msg:'验证码填写错误'}");
                 return;
             }
-            //业务： 检验用户名和密码是否存在
-            $sql = 'select * from `user` where phone = "' . $phone . '" and password ="' . $password . '"';
+            $sql = 'select * from `user` where phone = "' . $phone . '" and password ="' . $password . '" and status="1"';
             $user = (new DB())->find($sql);
         }else if($method=='sms'){
             $smscode=$_POST['smscode'];
             $verifyInfo=session('verifyInfo');
-            if($verifyInfo&&$verifyInfo['phone']==$phone&&$verifyInfo['smscode']==$smscode&&strtotime(date('y-m-d h:i:s'))-strtotime($verifyInfo['time'])<300){
+            if($verifyInfo&&$verifyInfo['phone']==$phone&&$verifyInfo['smscode']==$smscode&&strtotime(date('y-m-d H:i:s'))-strtotime($verifyInfo['time'])<300){
                 flash('verifyInfo');
                 $sql = 'select * from `user` where phone = "' . $phone .'"';
                 $user = (new DB())->find($sql);
@@ -102,7 +101,7 @@ class UsersController extends Controller
         $sendPhones=session('sendPhones');
         if($sendPhones){
             foreach ($sendPhones as $value){
-                if($value['phone']==$phone&& strtotime(date('y-m-d h:i:s')) - strtotime($value['time'])<60){
+                if($value['phone']==$phone&& strtotime(date('y-m-d H:i:s')) - strtotime($value['time'])<60){
                     echo json_encode('{success:0,msg:"发送失败,该号码在一分钟内重复发送"}');
                     return;
                 }
@@ -119,7 +118,7 @@ class UsersController extends Controller
             $arr = array(
                 'phone' => $phone,
                 'smscode' => $smscode,
-                'time'=>date('y-m-d h:i:s'),
+                'time'=>date('y-m-d H:i:s'),
                 'what'=>$what
             );
             session('verifyInfo',$arr);
@@ -163,9 +162,9 @@ class UsersController extends Controller
 
             $verifyInfo = session('verifyInfo');
 
-            if($verifyInfo&&$verifyInfo['phone']==$phone&&$verifyInfo['smscode']==$smscode&&strtotime(date('y-m-d h:i:s'))-strtotime($verifyInfo['time'])<300){
+            if($verifyInfo&&$verifyInfo['phone']==$phone&&$verifyInfo['smscode']==$smscode&&strtotime(date('y-m-d H:i:s'))-strtotime($verifyInfo['time'])<300){
                 flash('verifyInfo');
-                $result= (new DB())->save('user',['phone'=>$phone,'username'=>$username,'password'=>$password,'create_time'=>date('Y-m-d h:i:s')]);
+                $result= (new DB())->save('user',['phone'=>$phone,'username'=>$username,'password'=>$password,'create_time'=>date('Y-m-d H:i:s')]);
                 if($result){
                     echo json_encode("{success:1,msg:'注册成功'}");
                 }else{
@@ -189,7 +188,7 @@ class UsersController extends Controller
             $smscode=$_POST['smscode'];
 
             $verifyInfo = session('verifyInfo');
-            if($verifyInfo&&$verifyInfo['phone']==$phone&&$verifyInfo['smscode']==$smscode&&strtotime(date('y-m-d h:i:s'))-strtotime($verifyInfo['time'])<300) {
+            if($verifyInfo&&$verifyInfo['phone']==$phone&&$verifyInfo['smscode']==$smscode&&strtotime(date('y-m-d H:i:s'))-strtotime($verifyInfo['time'])<300) {
                 $sql='update `user` set password="'.$password.'" where phone="'.$phone.'"';
                 $result=$db->query($sql);
                 if($result){

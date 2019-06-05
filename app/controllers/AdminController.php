@@ -86,9 +86,128 @@ class AdminController extends Controller
     public function memberlist(){
         return view('app/admin/member-list');
     }
+    public function getmemberlist(){
+        $page=intval($_POST['page'])-1;
+        $limit=intval($_POST['limit']);
+        $page=$page*$limit;
+        $sql='select count(0) count from `user`';
+        $count=(new DB())->find($sql)->count;
+        $sql='select id,username,phone,email,create_time,status from `user` limit '.$page.','.$limit;
+        $result= (new DB())->query($sql);
+        $data=new stdClass();
+        $data->code=0;
+        $data->msg="";
+        $data->count=$count;
+        $data->data=$result;
+        echo json_encode($data);
+    }
+
+    public function filelist(){
+        return view('app/admin/file-list');
+    }
+    public function getfilelist(){
+        $page=intval($_POST['page'])-1;
+        $limit=intval($_POST['limit']);
+        $page=$page*$limit;
+        $sql='select count(0) count from `real_file`';
+        $count=(new DB())->find($sql)->count;
+        $sql='select * from `real_file` limit '.$page.','.$limit;
+        $result= (new DB())->query($sql);
+        $data=new stdClass();
+        $data->code=0;
+        $data->msg="";
+        $data->count=$count;
+        $data->data=$result;
+        echo json_encode($data);
+    }
+
+    public function changeStatus(){
+        $id=$_GET['id'];
+        $status=$_GET['status'];
+        $sql='update `user` set status='.$status.' where id='.$id ;
+        (new DB())->query($sql);
+    }
     public function logout(){
         session(null);
         session_destroy();
         return redirect('/admin/login');
+    }
+    public function memberEdit(){
+        $sql='select * from `user` where id='.$_GET['id'];
+        $user= (new DB())->find($sql);
+        return view('app/admin/member-edit',compact('user'));
+    }
+    public function memberEditAction(){
+        $id=$_POST['id'];
+        $phone=$_POST['phone'];
+        $username=$_POST['username'];
+        $email=$_POST['email'];
+        $sql='update `user` set phone="'.$phone.'",username="'.$username.'",email="'.$email.'" where id='.$id ;
+        $result= (new DB())->query($sql);
+        $response=new stdClass();
+        if($result){
+            $response->code=1;
+            $response->msg='编辑成功';
+        }
+        else{
+            $response->code=0;
+            $response->msg='编辑失败';
+        }
+        echo json_encode($response);
+    }
+    public function memberQuery(){
+        $start=$_POST['start'];
+        $end=$_POST['end'];
+        $username=$_POST['username'];
+
+        $condition=' 1=1 ';
+        if($start)
+            $condition=$condition.' and create_time> "'.$start.'"';
+        if($end)
+            $condition=$condition.' and create_time< "'.$end.'"';
+        if($username)
+            $condition=$condition.' and username like "%'.$username.'%"';
+
+        $page=intval($_POST['page'])-1;
+        $limit=intval($_POST['limit']);
+        $page=$page*$limit;
+        $sql='select count(0) count from `user` where'.$condition;
+
+
+        $count=(new DB())->find($sql)->count;
+
+        $sql='select id,username,phone,email,create_time,status from `user` where '.$condition.' limit '.$page.','.$limit;
+        $result= (new DB())->query($sql);
+        $data=new stdClass();
+        $data->code=0;
+        $data->msg="";
+        $data->count=$count;
+        $data->data=$result;
+        echo json_encode($data);
+
+    }
+    public function echartUser(){
+        $db=new DB();
+        $data=array();
+        $startTime=time()-(intval(date('w')+6)*24*3600);
+
+        for($i=0;$i<7;$i++){
+            $sql='select count(0) count from `user` where create_time>"'.date("y-m-d",$startTime+$i*24*3600).'" and create_time<"'.date("y-m-d",$startTime+($i+1)*24*3600).'"';
+            //d($sql);
+            array_push( $data,intval( $db->find($sql)->count));
+        }
+        $data=json_encode($data);
+
+        $data1=array();
+        $startTime=strtotime( date('y-m-d',strtotime('-1 day')) );
+
+        for($i=0;$i<12;$i++){
+            $sql='select count(0) count from `user` where create_time>"'.date("y-m-d H",$startTime+$i*7200).'" and create_time<"'.date("y-m-d H",$startTime+($i+1)*7200).'"';
+            //d($sql);
+            array_push( $data1,intval( $db->find($sql)->count));
+        }
+        $data1=json_encode($data1);
+
+        return view('app/admin/echarts-user',compact('data','data1'));
     }
 }

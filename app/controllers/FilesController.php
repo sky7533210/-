@@ -119,11 +119,11 @@ class FilesController extends Controller
             $sql = 'select * from `real_file` where md5="' . $fileInfo->md5 . '"';
             if (!$db->find($sql)) {
                 //不存在该文件，需要存实文件
-                $db->save('real_file', ['md5' => $fileInfo->md5, 'size' => $fileInfo->size, 'type' => $fileInfo->type, 'createTIme' => date('y-m-d h:i:s')]);
+                $db->save('real_file', ['md5' => $fileInfo->md5, 'size' => $fileInfo->size, 'type' => $fileInfo->type, 'createTIme' => date('y-m-d H:i:s')]);
             }
             //把虚文件存入数据库中
             $result = $db->save('vir_file', ['user_id' => $user->id, 'md5' => $fileInfo->md5, 'name' => $fileInfo->name, 'size' => $fileInfo->size,
-                'type' => $fileInfo->type, 'parent_id' => $_POST['parentid'], 'create_time' => date('y-m-d h:m:s')]);
+                'type' => $fileInfo->type, 'parent_id' => $_POST['parentid'], 'create_time' => date('y-m-d H:i:s')]);
         }
         return;
     }
@@ -146,7 +146,7 @@ class FilesController extends Controller
                 $type = '';
             }
             $db->save('vir_file', ['user_id' => $user->id, 'md5' => $md5, 'name' => $name, 'size' => $size,
-                'type' => $type, 'parent_id' => $_POST['parentid'], 'create_time' => date('y-m-d h:m:s')]);
+                'type' => $type, 'parent_id' => $_POST['parentid'], 'create_time' => date('y-m-d H:i:s')]);
             $json = '{"code":0}';
         } else {
             $json = '{"code":1}';  //要上传
@@ -161,7 +161,7 @@ class FilesController extends Controller
         $userdir = $_POST['userdir'];
         $user = session('user');
         (new DB())->save('vir_file', ['user_id' => $user->id, 'name' => $userdir,
-            'type' => '-1', 'parent_id' => $parentid, 'create_time' => date('y-m-d h:m:s')]);
+            'type' => '-1', 'parent_id' => $parentid, 'create_time' => date('y-m-d H:i:s')]);
         return redirect('/home?parentid=' . $parentid);
     }
 
@@ -170,7 +170,7 @@ class FilesController extends Controller
         $parentid = $_GET['parentid'];
         $userid = session('user')->id;
         $ids = $_GET['ids'];
-        $sql = 'update `vir_file` set isdel=1,del_time="'.date('y-m-d h:m:s').'" where user_id=' . $userid . ' and id in(' . $ids . ')';
+        $sql = 'update `vir_file` set isdel=1,del_time="'.date('y-m-d H:i:s').'" where user_id=' . $userid . ' and id in(' . $ids . ')';
         (new DB())->query($sql);
         return redirect('/home?parentid=' . $parentid);
     }
@@ -201,7 +201,7 @@ class FilesController extends Controller
             $result = $db->query($sql);
             foreach ($result as $value) {
                 $db->save('vir_file', ['user_id' => $userid, 'md5' => $value->md5, 'name' => $value->name,
-                    'size' => $value->size, 'type' => $value->type, 'parent_id' => $destid, 'create_time' => date('y-m-d h:m:s')]);
+                    'size' => $value->size, 'type' => $value->type, 'parent_id' => $destid, 'create_time' => date('y-m-d H:i:s')]);
             }
         } else { //移动
             $sql = 'update `vir_file` set parent_id="' . $destid . '" where user_id=' . $userid . ' and id in (' . $id . ')';
