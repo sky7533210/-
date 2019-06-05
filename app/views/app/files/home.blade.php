@@ -26,6 +26,7 @@
 
     <link rel="stylesheet" href="/assets/css/vfm-style.css">
     <link rel="stylesheet" href="/assets/skins/vfm-2016.css">
+    <link href="/assets/css/bootstrapValidator.min.css" rel="stylesheet">
 
 </head>
 <body id="uparea" class="vfm-body inlinethumbs">
@@ -79,7 +80,7 @@
 </nav>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="/assets/js/jquery-1.12.4.min.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/assets/js/bootstrap.min.js"></script>
 
@@ -91,8 +92,190 @@
 </script>
 
 <!-- 添加用户修改的页面-->
-<?php require_once 'userModify.php'?>
+<div class="modal userpanel fade" id="userpanel" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" >
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <ul class="nav nav-pills" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#upprof" aria-controls="home" role="tab" data-toggle="pill" draggable="false">
+                            <i class="fa fa-edit"></i>
+                            修改 </a>
+                    </li>
+                </ul>
+            </div>
 
+            <div class="modal-body">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="upprof">
+                        <form role="form" id="modifyform">
+                            <div class="form-group">
+                                <label>
+                                    手机号</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                    <input name="phone" type="text"
+                                           class="form-control" value="{{$user->phone}}">
+                                </div>
+                                <label>
+                                    昵称 </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                    <input name="username" type="text"
+                                           class="form-control" value="{{$username}}">
+                                </div>
+                                <label>
+                                    邮箱 </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+                                    <input name="email" type="email"
+                                           class="form-control" value="{{$user->email}}">
+                                </div>
+                                <!--<label>
+                                    重设密码 </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                                    <input name="newpassword" autocomplete="off" id="newp" type="password" autocomplete="off" value="{{$user->password}}"
+                                           class="form-control">
+                                </div>
+                                <label>
+                                    重设密码 (确认) </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                                    <input name="renewpassword" autocomplete="off" autocomplete="off" value="{{$user->password}}"
+                                           type="password"
+                                           class="form-control">
+                                </div>-->
+                                <label>
+                                    当前密码 </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-unlock fa-fw"></i></span>
+                                    <input name="password" autocomplete="off" type="password" id="oldp" required
+                                           class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-block" id="submit">
+                                    <i class="fa fa-refresh"></i>
+                                    修改
+                                </button>
+                            </div>
+
+                        </form>
+                    </div> <!-- tabpanel -->
+                </div><!-- tab-content -->
+            </div> <!-- modal-body -->
+        </div> <!-- modal-content -->
+    </div> <!-- modal-dialog -->
+</div> <!-- modal -->
+<script src="/assets/js/bootstrapValidator.min.js"></script>
+<script>
+    $(function(){
+        $('#modifyform').bootstrapValidator({
+            message: 'This value is not valid',
+            live: 'disabled',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                phone: {
+                    validators: {
+                        notEmpty: {
+                            message: '手机号不能为空'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^1[34578]\d{9}$/,
+                            message: '请输入正确的手机号码'
+                        }
+                    }
+                },
+                username: {
+                    validators: {
+                        notEmpty: {
+                            message: '昵称不能为空'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: '昵称不能为空'
+                        },
+                        emailAddress:{
+                            message:'不符合邮箱地址'
+                        }
+                    }
+                },
+                /*newpassword: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        identical: {
+                            field: 'renewpassword',
+                            message: '与确认新密码不同'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '所输入的字符不符合要求'
+                        }
+                    }
+                },
+                newpassword: {
+                    validators: {
+                        notEmpty: {
+                            message: '确认新密码不能为空'
+                        },
+                        identical: {
+                            field: 'newpassword',
+                            message: '与新密码不同'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '所输入的字符不符合要求'
+                        }
+                    }
+                },*/
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '当前密码不能为空'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '所输入的字符不符合要求'
+                        }
+                    }
+                }
+            }
+        });
+
+        $("#submit").click(function () {//非submit按钮点击后进行验证，如果是submit则无需此句直接验证
+            $("#modifyform").bootstrapValidator('validate');//提交验证
+            if ($("#modifyform").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+                $.ajax({
+                    url: '/updateinfo',
+                    type: 'post',
+                    data: $("#modifyform").serializeArray(),
+                    dataType:"json",
+                    success: function (response) {
+                        var data =eval("("+response+")");
+                        $('#tiperrortext').text(data.msg);
+                        $('#error').show();
+                    }
+                });
+            }
+        });
+
+
+    });
+</script>
 
 <header class="vfm-header">
     <div class="container">
@@ -109,7 +292,7 @@
     <div id="error" style="display: none;">
         <div class="alert-wrap ">
             <div class="response yep alert" role="alert">
-                <span id="tiperrortext"><i class="fa fa-check-circle"></i> 数字.txt </span>
+                <span id="tiperrortext"><i class="fa fa-check-circle"></i>  </span>
                 <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

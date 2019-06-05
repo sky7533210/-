@@ -25,6 +25,7 @@
 
     <link rel="stylesheet" href="/assets/css/vfm-style.css">
     <link rel="stylesheet" href="/assets/skins/vfm-2016.css">
+    <link href="/assets/css/bootstrapValidator.min.css" rel="stylesheet">
 
 </head>
 <body id="uparea" class="vfm-body inlinethumbs">
@@ -66,14 +67,14 @@
             <div class="login">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form>
+                        <form id="form">
                             <div id="login_bar" class="form-group">
                                 <div class="form-group">
                                     <label class="sr-only" for="user_name">
                                         账号 </label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-mobile-phone fa-fw"></i></span>
-                                        <input type="text" value="" id="userid" class="form-control"
+                                        <input type="text" value="" id="userid" name="userid" class="form-control"
                                                placeholder="请输入管理员账号" />
                                     </div>
                                 </div>
@@ -82,7 +83,7 @@
                                         密码 </label>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-                                        <input type="password" id="password" autocomplete="off" class="form-control"
+                                        <input type="password" id="password" name="password" autocomplete="off" class="form-control"
                                                placeholder="请输入管理员密码"/>
                                     </div>
                                 </div>
@@ -108,6 +109,8 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/assets/js/bootstrap.min.js"></script>
 
+<script src="/assets/js/bootstrapValidator.min.js"></script>
+
 <script type="text/javascript">
     $(function () {
 
@@ -115,24 +118,59 @@
             $('#error').hide();
         });
 
-        $("#btnlogin").click(function () {
-            var userid=$("#userid").val();
-            var password=$("#password").val();
-            $.ajax({
-                url: '/admin/login',
-                type: 'post',
-                data: {userid:userid,password:password},
-                dataType:"json",
-                success: function (response) {
-                    var data =eval("("+response+")");
-                    if(data.success==0){
-                        $('#tiperrortext').text(data.msg);
-                        $('#error').show();
-                    }else{
-                        window.location.href="/admin/home";
+        $('#form').bootstrapValidator({
+            message: 'This value is not valid',
+            live: 'disabled',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                userid: {
+                    validators: {
+                        notEmpty: {
+                            message: '账号不能为空'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '所输入的字符不符要求'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '所输入的字符不符合要求'
+                        }
                     }
                 }
-            });
+            }
+        });
+
+        $("#btnlogin").click(function () {//非submit按钮点击后进行验证，如果是submit则无需此句直接验证
+            $("#form").bootstrapValidator('validate');//提交验证
+            if ($("#form").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+                $.ajax({
+                    url: '/admin/login',
+                    type: 'post',
+                    data: $("#form").serializeArray(),
+                    dataType:"json",
+                    success: function (response) {
+                        var data =eval("("+response+")");
+                        if(data.success==0){
+                            $('#tiperrortext').text(data.msg);
+                            $('#error').show();
+                        }else{
+                            window.location.href="/admin/home";
+                        }
+                    }
+                });
+            }
         });
     });
 </script>

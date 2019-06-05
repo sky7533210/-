@@ -25,6 +25,7 @@
 
     <link rel="stylesheet" href="/assets/css/vfm-style.css">
     <link rel="stylesheet" href="/assets/skins/vfm-2016.css">
+    <link href="/assets/css/bootstrapValidator.min.css" rel="stylesheet">
 
 </head>
 <body id="uparea" class="vfm-body inlinethumbs">
@@ -66,7 +67,7 @@
             <div class="login">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form>
+                        <form id="form">
                             <div class="form-group">
                                 <a id="btnloginswitch" class="btn btn-primary">短信快捷登录</a>
                             </div>
@@ -96,7 +97,7 @@
                                             <img src="/captcha" name="captcha" id="captcha">
                                         </span>
 
-                                        <input class="form-control input" id="authcode" type="text" name="authcode"
+                                        <input class="form-control input" id="authcode" type="text" name="authcode" autocomplete="off"
                                                placeholder="验证码"/>
                                         <span class="input-group-btn">
                                             <button class="btn btn-default btn" type="button" id="capreload">
@@ -108,7 +109,7 @@
 
                                 <div class="form-group" id="sms" style="display: none">
                                     <div class="input-group">
-                                        <input class="form-control input" id="smscode" type="text" name="smscode"
+                                        <input class="form-control input" id="smscode" type="text" name="smscode" autocomplete="off"
                                                placeholder="请输入短信验证码"/>
                                         <span class="input-group-btn">
                                             <button class="btn btn-default btn" type="button" id="btngetsmscode">
@@ -143,6 +144,7 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/assets/js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/assets/js/bootstrapValidator.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/sendSms.js"></script>
 
@@ -174,6 +176,35 @@
         });
 
         $("#btngetsmscode").click(function () {
+            //$("#form").data('bootstrapValidator').destroy();
+            $('#form').data('bootstrapValidator',null);
+            $('#form').bootstrapValidator({
+                message: 'This value is not valid',
+                live: 'disabled',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    phone: {
+                        validators: {
+                            notEmpty: {
+                                message: '手机号不能为空'
+                            },
+                            regexp: {//正则验证
+                                regexp: /^1[34578]\d{9}$/,
+                                message: '请输入正确的手机号码'
+                            }
+                        }
+                    }
+                }
+            });
+            $("#form").bootstrapValidator('validate');//提交验证
+            if (!($("#form").data('bootstrapValidator').isValid())) {//获取验证结果，如果成功，执行下面代码
+                return;
+            }
+
             var phone=$("#phone").val();
             sendsms(phone,"login",function (response) {
                 var data = eval("("+response+")");
@@ -185,6 +216,46 @@
             var data;
             var phone=$("#phone").val();
             if(i%2==1){
+                <!--表单验证-->
+                //$("#form").data('bootstrapValidator').destroy();
+                $('#form').data('bootstrapValidator',null);
+                $('#form').bootstrapValidator({
+                    message: 'This value is not valid',
+                    live: 'disabled',
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        phone: {
+                            validators: {
+                                notEmpty: {
+                                    message: '手机号不能为空'
+                                },
+                                regexp: {//正则验证
+                                    regexp: /^1[34578]\d{9}$/,
+                                    message: '所输入真确的手机号码'
+                                }
+                            }
+                        },
+                        smscode: {
+                            validators: {
+                                notEmpty: {
+                                    message: '短信验证码不能为空'
+                                },
+                                regexp: {//正则验证
+                                    regexp: /^\d{6}$/,
+                                    message: '请输入6位数字'
+                                }
+                            }
+                        }
+                    }
+                });
+                $("#form").bootstrapValidator('validate');//提交验证
+                if (!($("#form").data('bootstrapValidator').isValid())) {//获取验证结果，如果成功，执行下面代码
+                   return;
+                }
                 var smscode=$("#smscode").val();
                 data= {
                     'phone': phone
@@ -192,6 +263,59 @@
                     , 'method': 'sms'
                 }
             }else{
+
+               <!--表单验证-->
+                //$("#form").data('bootstrapValidator').destroy();
+                $('#form').data('bootstrapValidator',null);
+                $('#form').bootstrapValidator({
+                    message: 'This value is not valid',
+                    live: 'disabled',
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        phone: {
+                            validators: {
+                                notEmpty: {
+                                    message: '手机号不能为空'
+                                },
+                                regexp: {//正则验证
+                                    regexp: /^1[34578]\d{9}$/,
+                                    message: '所输入真确的手机号码'
+                                }
+                            }
+                        },
+                        password: {
+                            validators: {
+                                notEmpty: {
+                                    message: '密码不能为空'
+                                },
+                                regexp: {//正则验证
+                                    regexp: /^[a-zA-Z0-9_\.]+$/,
+                                    message: '所输入的字符不符合要求'
+                                }
+                            }
+                        },
+                        authcode: {
+                            validators: {
+                                notEmpty: {
+                                    message: '验证码不能为空'
+                                },
+                                regexp: {//正则验证
+                                    regexp: /^[a-zA-Z0-9]{4}$/,
+                                    message: '请输入4位数字或字符'
+                                }
+                            }
+                        }
+                    }
+                });
+                $("#form").bootstrapValidator('validate');//提交验证
+                if (!($("#form").data('bootstrapValidator').isValid())) {//获取验证结果，如果成功，执行下面代码
+                    return;
+                }
+
                 var password=$("#password").val();
                 var authcode=$("#authcode").val();
                 data={

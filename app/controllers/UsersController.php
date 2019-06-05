@@ -25,7 +25,7 @@ class UsersController extends Controller
     }
     public function findPsw()
     {
-        return view('app/users/findPsw1');
+        return view('app/users/findPsw');
     }
     public function login_check()
     {
@@ -34,7 +34,7 @@ class UsersController extends Controller
         $method = $_POST['method'];
 
         if ($method == 'pwd') {
-            $password = $_POST['password'];
+            $password = md5( $_POST['password']);
             $authcode = $_POST['authcode'];
             //用户名和密码不能为空
             if (empty($phone) || empty($password) || empty($authcode)) {
@@ -74,7 +74,6 @@ class UsersController extends Controller
     {
         $phone=$_POST['phone'];
         $what=$_POST['what'];
-
         $sql = 'select * from `user` where phone = "'.$phone.'"';
         $find=(new DB())->find($sql);
 
@@ -148,7 +147,7 @@ class UsersController extends Controller
     }
     public function register()
     {
-        return view('app/users/register1');
+        return view('app/users/register');
     }
     public function register_action()
     {
@@ -159,7 +158,7 @@ class UsersController extends Controller
             echo json_encode("{success:0,msg:'该手机号已经注册'}");
         }else{
             $username=$_POST['username'];
-            $password=$_POST['password'];
+            $password=md5($_POST['password']);
             $smscode=$_POST['smscode'];
 
             $verifyInfo = session('verifyInfo');
@@ -186,7 +185,7 @@ class UsersController extends Controller
         $db=new DB();
         $result= $db->find($sql);
         if ($result){
-            $password=$_POST['password'];
+            $password=md5($_POST['password']);
             $smscode=$_POST['smscode'];
 
             $verifyInfo = session('verifyInfo');
@@ -203,6 +202,29 @@ class UsersController extends Controller
             }
         }else{
             echo json_encode("{success:0,msg:'该手机号还没有注册'}");
+        }
+        return;
+    }
+    public function updateinfo(){
+        $userid=session('user')->id;
+        $phone=$_POST['phone'];
+        $username=$_POST['username'];
+        $email=$_POST['email'];
+        //$newpassword=md5($_POST['newpassword']);
+        $password=md5($_POST['password']);
+
+
+        $sql='update user set phone="'.$phone.'", username="'.$username.'",email="'.$email.'" where id='.$userid.' and password="'.$password.'"';
+        $result= (new DB())->query($sql);
+        if($result){
+           $user=session('user');
+           $user->phone=$phone;
+           $user->username=$username;
+           $user->email=$email;
+           //$user->password=$password;
+           echo json_encode('{"success":1,"msg":"修改成功,请刷新当前页面"}');
+        }else{
+           echo json_encode('{"success":0,"msg":"修改失败，当前密码输入错误"}');
         }
         return;
     }

@@ -50,7 +50,8 @@ class FilesController extends Controller
         $movies = $this->movieArr;
         $ims = array_merge($this->imgArr, $this->movieArr);
         $sounds = $this->soundArr;
-        return view('app/files/home', compact('username', 'files', 'dirs', 'parentid', 'paths', 'folderTree', 'fa', 'imgs', 'movies', 'ims', 'sounds'));
+        $user=session('user');
+        return view('app/files/home', compact('username', 'files', 'dirs', 'parentid', 'paths', 'folderTree', 'fa', 'imgs', 'movies', 'ims', 'sounds','user'));
     }
 
     private function getFolderTree($v)
@@ -137,7 +138,6 @@ class FilesController extends Controller
             $user = session('user');
             $name = $_POST['name'];
             $size = $_POST['size'];
-
 
             $pos = strrpos($name, '.');
             if ($pos) {

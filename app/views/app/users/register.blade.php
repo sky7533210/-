@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <title>Sky云盘登录</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <title></title>
 
     <!-- Bootstrap -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
@@ -23,86 +22,292 @@
     <script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="/assets/js/ie-emulation-modes-warning.js"></script>
 
+
+    <link rel="stylesheet" href="/assets/css/vfm-style.css">
+    <link rel="stylesheet" href="/assets/skins/vfm-2016.css">
+    <link href="/assets/css/bootstrapValidator.min.css" rel="stylesheet">
+
+
 </head>
-<body>
-<!-- some contents  -->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-            <h1>用户注册</h1>
-            <hr>
-            <a href="/login" class="btn btn-primary">去登录</a>
-            <form>
-                <div class="form-group">
-                    <label>手机</label>
-                    <input type="text" name="phone" id="phone" placeholder="手机号" autocomplete="on" class="form-control">
-                </div>
+<body id="uparea" class="vfm-body inlinethumbs">
+<div class="overdrag"></div>
 
-                <div class="form-group">
-                    <label>用户名</label>
-                    <input type="text" name="username" id="username" placeholder="用户名" autocomplete="off" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label>密码</label>
-                    <input type="password" name="password" id="password" placeholder="密码" autocomplete="off" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label>确认密码</label>
-                    <input type="password" name="repassword" id="repassword" placeholder="确认密码" autocomplete="off" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label>短信验证码</label>
-                    <input type="text" name="smscode" id="smscode" placeholder="验证码" autocomplete="off" class="form-control">
-                    <button id="btnsendsms" type="button" class="btn btn-primary">发送</button>
-                </div>
-
-                <div class="form-group">
-                    <input type="button" id="btnregister" value="注册" class="btn btn-block btn-primary">
-                </div>
-            </form>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="javascript:;">
+                sky云盘 </a>
         </div>
     </div>
-</div>
+</nav>
 
+
+<header class="vfm-header">
+    <div class="container">
+        <div class="head-banner text-center">
+            <a href="javascript:;">
+                <img alt="sky云盘" src="/assets/images/logo.png">
+            </a>
+        </div>
+    </div> <!-- .container -->
+</header>
+<div class="container">
+    <div class="main-content">
+
+        <div  id="error" style="display: none;">
+            <div class="alert-wrap ">
+                <div class="response yep alert" role="alert">
+                    <span id="tiperrortext"><i class="fa fa-check-circle"></i> 数字.txt </span>
+                    <button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <section class="vfmblock">
+            <div class="login">
+                <div id="regresponse"></div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-user-plus"></i> 注册
+                    </div>
+                    <div class="panel-body">
+                        <form id="form">
+                            <div id="login_bar" class="form-group">
+                                <div class="form-group">
+                                    <div class="has-feedback">
+                                        <label for="phone">*手机 </label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-mobile-phone fa-fw"></i>
+                                            </span>
+                                            <input type="text" id="phone" name="phone"
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="has-feedback">
+                                            <label for="username">*呢称 </label>
+                                            <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-user fa-fw"></i>
+                                                    </span>
+                                                <input type="text" name="username" value="" id="username"
+                                                       class="form-control"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="user_pass">*
+                                            密码 </label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                                            <input type="password" name="password" id="password"
+                                                   class="form-control" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="user_pass">*
+                                            密码 (确认) </label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                                            <input type="password" name="repassword" id="repassword"
+                                                   id="user_pass_check"
+                                                   class="form-control" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group captcha-group">
+                                            <div class="input-group">
+                                                <input class="form-control input" id="smscode" type="text"
+                                                       name="smscode"
+                                                       placeholder="短信验证码"/>
+                                                <span class="input-group-btn">
+                                        <button class="btn btn-default btn" type="button" id="btnsendsms">
+                                            获取验证码
+                                        </button>
+                                </span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-block " id="btnregister"/>
+                                        <i class="fa fa-check"></i>
+                                        注册                                </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="mailpreload">
+                        <div class="cta">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+                <a href="/login"><i class="fa fa-sign-in"></i> 登陆</a>
+            </div>
+        </section>
+    </div> <!-- .main-content -->
+</div> <!-- .container -->
+<footer class="footer">
+    <div class="container">
+        <span class="pull-left"><a href="javascript:;" target="_blank">
+            乌云网 </a>
+            &copy; 2019 </span>
+    </div>
+</footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/assets/js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/sendSms.js"></script>
-<script>
-    $(function (){
+<script src="/assets/js/bootstrapValidator.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('.close').click(function () {
+            $('#error').hide();
+        });
+
         $("#btnsendsms").click(function () {
-            var phone=$.trim( $("#phone").val());
-            sendsms(phone,"reg",function (res) {
-                var data = eval("("+res+")");
-                alert(data.msg);
+            $('#form').data('bootstrapValidator',null);
+            $('#form').bootstrapValidator({
+                message: 'This value is not valid',
+                live: 'disabled',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    phone: {
+                        validators: {
+                            notEmpty: {
+                                message: '手机号不能为空'
+                            },
+                            regexp: {//正则验证
+                                regexp: /^1[34578]\d{9}$/,
+                                message: '请输入正确的手机号码'
+                            }
+                        }
+                    }
+                }
+            });
+            $("#form").bootstrapValidator('validate');//提交验证
+            if (!($("#form").data('bootstrapValidator').isValid())) {//获取验证结果，如果成功，执行下面代码
+                return;
+            }
+            var phone = $.trim($("#phone").val());
+            sendsms(phone, "reg", function (res) {
+                var data = eval("(" + res + ")");
+                $('#tiperrortext').text(data.msg);
+                $('#error').show();
             })
         });
 
         $("#btnregister").click(function () {
-            var phone= $("#phone").val().trim();
-            var username=$("#username").val().trim();
-            var password=$("#password").val().trim();
-            var smscode=$("#smscode").val().trim();
+
+            $('#form').data('bootstrapValidator',null);
+            $('#form').bootstrapValidator({
+                message: 'This value is not valid',
+                live: 'disabled',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    phone: {
+                        validators: {
+                            notEmpty: {
+                                message: '手机号不能为空'
+                            },
+                            regexp: {//正则验证
+                                regexp: /^1[34578]\d{9}$/,
+                                message: '所输入真确的手机号码'
+                            }
+                        }
+                    },
+                    username: {
+                        validators: {
+                            notEmpty: {
+                                message: '昵称不能为空'
+                            }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空'
+                            },
+                            identical: {
+                                field: 'repassword',
+                                message: '与确认密码不同'
+                            },
+                            regexp: {//正则验证
+                                regexp: /^[a-zA-Z0-9_\.]+$/,
+                                message: '所输入的字符不符合要求'
+                            }
+                        }
+                    },
+                    repassword: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空'
+                            },
+                            identical: {
+                                field: 'password',
+                                message: '与密码不同'
+                            },
+                            regexp: {//正则验证
+                                regexp: /^[a-zA-Z0-9_\.]+$/,
+                                message: '所输入的字符不符合要求'
+                            }
+                        }
+                    },
+                    smscode: {
+                        validators: {
+                            notEmpty: {
+                                message: '短信验证码不能为空'
+                            },
+                            regexp: {//正则验证
+                                regexp: /^\d{6}$/,
+                                message: '请输入6位数字'
+                            }
+                        }
+                    }
+                }
+            });
+            $("#form").bootstrapValidator('validate');//提交验证
+            if (!($("#form").data('bootstrapValidator').isValid())) {//获取验证结果，如果成功，执行下面代码
+                return;
+            }
+
+            var phone = $("#phone").val().trim();
+            var username = $("#username").val().trim();
+            var password = $("#password").val().trim();
+            var smscode = $("#smscode").val().trim();
             $.ajax({
                 url: '/register',
                 type: 'post',
                 data: {
-                    'phone':phone
-                    ,'username':username
-                    ,'password':password
-                    ,'smscode':smscode
+                    'phone': phone
+                    , 'username': username
+                    , 'password': password
+                    , 'smscode': smscode
                 },
-                dataType:"json",
+                dataType: "json",
                 success: function (response) {
-                    var data = eval("("+response+")");
-                    if(data.success==0){
-                        alert(data.msg);
-                    }else{
-                        alert(data.msg);
+                    var data = eval("(" + response + ")");
+                    if (data.success == 0) {
+                        $('#tiperrortext').text(data.msg);
+                        $('#error').show();
+                    } else {
+                        $('#tiperrortext').text(data.msg);
+                        $('#error').show();
                     }
                 }
             });
@@ -110,5 +315,6 @@
         })
     });
 </script>
+
 </body>
 </html>

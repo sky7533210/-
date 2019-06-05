@@ -50,13 +50,41 @@ class AdminController extends Controller
     }
     public function index()
     {
-
+        $name=session('admin')->userid;
         $sql='select * from  `real_file`';
         $db=new DB();
         $files= $db->query($sql);
         $sql='select * from `user`';
         $users= $db->query($sql);
-        return view('app/admin/home',compact('files','users'));
+        return view('app/admin/home1',compact('name','files','users'));
+    }
+    public function welcome(){
+        $name=session('admin')->userid;
+
+        $db=new DB();
+        $data=new stdClass();
+        $sql='select count(*) count from `real_file`';
+        $data->countfile=$db->find($sql)->count;
+
+        $sql='select sum(size) size from `real_file`';
+        $data->totalsize=$db->find($sql)->size;
+
+        $sql='select count(*) count from `user`';
+        $data->countuser=$db->find($sql)->count;
+
+        $sql='select count(*) count from `vir_file` where type!="-1"';
+        $data->countvirfile=$db->find($sql)->count;
+
+        $sql='select sum(size) size from `vir_file` where type!="-1"';
+        $data->totalvirsize=$db->find($sql)->size;
+
+        $sql='select count(*) count from `share_file`';
+        $data->countshare=$db->find($sql)->count;
+
+        return view('app/admin/welcome',compact('name','data'));
+    }
+    public function memberlist(){
+        return view('app/admin/member-list');
     }
     public function logout(){
         session(null);

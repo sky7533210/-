@@ -14,32 +14,23 @@
  */
 Router::get('/', 'FilesController@index');
 
+
 Router::get('/login', 'UsersController@login');
-
 Router::post('/login', 'UsersController@login_check');
-
 Router::get('/logout','UsersController@logout');
-
 Router::get('/findpsw','UsersController@findPsw');
-
 Router::post('/updatepsw','UsersController@updatePsw');
-
 Router::get('/register','UsersController@register');
-
 Router::post('/register','UsersController@register_action');
-
 Router::post('/getsmscode','UsersController@sendSmsCode');
+Router::post('/updateinfo','UsersController@updateinfo');
+
 
 Router::get('/home', 'FilesController@index');
-
 Router::post('/upload','FilesController@upload');
-
 Router::post('/upload/list','FilesController@index');
-
 Router::get('/file/list','FilesController@fileList');
-
 Router::get('/file/upload','FilesController@checkUpload');
-
 Router::post('/file/upload','FilesController@upload');
 Router::post('/file/checkmd5','FilesController@checkMd5');
 Router::post('/file/createdir','FilesController@createDir');
@@ -73,6 +64,8 @@ Router::get('/admin/home','AdminController@index');
 Router::get('/admin/login','AdminController@login');
 Router::post('/admin/login', 'AdminController@login_check');
 Router::get('/admin/logout','AdminController@logout');
+Router::get('/admin/welcome','AdminController@welcome');
+Router::get('/admin/memberlist','AdminController@memberlist');
 
 //in app/routes.php 路由 /captcha
 Router::get('/captcha', function(){
