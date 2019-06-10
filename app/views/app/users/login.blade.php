@@ -42,7 +42,7 @@
     <div class="container">
         <div class="head-banner text-center">
             <a href="javascript:;">
-                <img alt="极简云盘" src="/assets/images/logo.png">
+                <img alt="Sky云盘" src="/assets/images/logo.png">
             </a>
         </div>
     </div>
@@ -70,6 +70,8 @@
                         <form id="form">
                             <div class="form-group">
                                 <a id="btnloginswitch" class="btn btn-primary">短信快捷登录</a>
+                                <a class="btn btn-primary" href="/register" style="float: right">
+                                    <i class="fa fa-user-plus"></i> 注册 </a>
                             </div>
                             <div id="login_bar" class="form-group">
                                 <div class="form-group">
@@ -120,16 +122,13 @@
                                 </div>
 
                                 <button class="btn btn-primary btn-block" type="button" id="btnlogin"/>
-                                <i class="fa fa-sign-in"></i>登陆</button>
+                                <i class="fa fa-sign-in"></i> 登陆</button>
                             </div>
                         </form>
                         <p><a href="/findpsw">忘记密码？</a></p>
                     </div>
                 </div>
-                <p>
-                    <a class="btn btn-default btn-block" href="/register">
-                        <i class="fa fa-user-plus"></i> 注册 </a>
-                </p>
+
             </div>
         </section>
     </div> <!-- .main-content -->

@@ -51,7 +51,9 @@ class ImageService{
     public function __construct($imgname = null) {
         $imgname && $this->open($imgname);
     }
-
+    public function getImg(){
+        return $this->img;
+    }
     /**
      * 打开一张图像
      * @param  string $imgname 图像路径

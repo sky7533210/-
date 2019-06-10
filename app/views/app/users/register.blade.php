@@ -71,13 +71,14 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-user-plus"></i> 注册
+                        <a href="/login" style="float: right"><i class="fa fa-sign-in"></i> 去登陆</a>
                     </div>
                     <div class="panel-body">
                         <form id="form">
                             <div id="login_bar" class="form-group">
                                 <div class="form-group">
                                     <div class="has-feedback">
-                                        <label for="phone">*手机 </label>
+                                        <label for="phone">手机 </label>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fa fa-mobile-phone fa-fw"></i>
@@ -89,7 +90,7 @@
 
                                     <div class="form-group">
                                         <div class="has-feedback">
-                                            <label for="username">*呢称 </label>
+                                            <label for="username">呢称 </label>
                                             <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-user fa-fw"></i>
@@ -101,7 +102,7 @@
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="user_pass">*
+                                        <label for="user_pass">
                                             密码 </label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
@@ -110,7 +111,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="user_pass">*
+                                        <label for="user_pass">
                                             密码 (确认) </label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
@@ -146,7 +147,6 @@
                         </div>
                     </div>
                 </div>
-                <a href="/login"><i class="fa fa-sign-in"></i> 登陆</a>
             </div>
         </section>
     </div> <!-- .main-content -->
@@ -154,7 +154,7 @@
 <footer class="footer">
     <div class="container">
         <span class="pull-left"><a href="javascript:;" target="_blank">
-            乌云网 </a>
+            Sky网 </a>
             &copy; 2019 </span>
     </div>
 </footer>

@@ -11,7 +11,7 @@ class AdminController extends Controller
     protected $access_control = true;//设置是否开启访问权限控制，如要开启必须设置
 
     protected $accessible_list = [
-        'login','login_check'
+        'login', 'login_check'
     ];//设置允许未登录访问的操作（即控制器中的方法）
 
     protected $login_identifier = 'admin';//设置session中的登录检测标识，根据编码设置
@@ -37,9 +37,9 @@ class AdminController extends Controller
             return;
         }
         if ($userid == 'admin' && $password == 'admin') {
-            $admin=new stdClass();
-            $admin->userid='admin';
-            $admin->password='admin';
+            $admin = new stdClass();
+            $admin->userid = 'admin';
+            $admin->password = 'admin';
             session('admin', $admin);
             echo json_encode("{success:1,msg:'登录成功'}");
         } else {
@@ -48,166 +48,273 @@ class AdminController extends Controller
         return;
 
     }
+
     public function index()
     {
-        $name=session('admin')->userid;
-        $sql='select * from  `real_file`';
-        $db=new DB();
-        $files= $db->query($sql);
-        $sql='select * from `user`';
-        $users= $db->query($sql);
-        return view('app/admin/home1',compact('name','files','users'));
+        $name = session('admin')->userid;
+        $sql = 'select * from  `real_file`';
+        $db = new DB();
+        $files = $db->query($sql);
+        $sql = 'select * from `user`';
+        $users = $db->query($sql);
+        return view('app/admin/home1', compact('name', 'files', 'users'));
     }
-    public function welcome(){
-        $name=session('admin')->userid;
 
-        $db=new DB();
-        $data=new stdClass();
-        $sql='select count(*) count from `real_file`';
-        $data->countfile=$db->find($sql)->count;
+    public function welcome()
+    {
+        $name = session('admin')->userid;
 
-        $sql='select sum(size) size from `real_file`';
-        $data->totalsize=$db->find($sql)->size;
+        $db = new DB();
+        $data = new stdClass();
+        $sql = 'select count(*) count from `real_file`';
+        $data->countfile = $db->find($sql)->count;
 
-        $sql='select count(*) count from `user`';
-        $data->countuser=$db->find($sql)->count;
+        $sql = 'select sum(size) size from `real_file`';
+        $data->totalsize = $db->find($sql)->size;
 
-        $sql='select count(*) count from `vir_file` where type!="-1"';
-        $data->countvirfile=$db->find($sql)->count;
+        $sql = 'select count(*) count from `user`';
+        $data->countuser = $db->find($sql)->count;
 
-        $sql='select sum(size) size from `vir_file` where type!="-1"';
-        $data->totalvirsize=$db->find($sql)->size;
+        $sql = 'select count(*) count from `vir_file` where type!="-1"';
+        $data->countvirfile = $db->find($sql)->count;
 
-        $sql='select count(*) count from `share_file`';
-        $data->countshare=$db->find($sql)->count;
+        $sql = 'select sum(size) size from `vir_file` where type!="-1"';
+        $data->totalvirsize = $db->find($sql)->size;
 
-        return view('app/admin/welcome',compact('name','data'));
+        $sql = 'select count(*) count from `share_file`';
+        $data->countshare = $db->find($sql)->count;
+
+        return view('app/admin/welcome', compact('name', 'data'));
     }
-    public function memberlist(){
+
+    public function memberlist()
+    {
         return view('app/admin/member-list');
     }
-    public function getmemberlist(){
-        $page=intval($_POST['page'])-1;
-        $limit=intval($_POST['limit']);
-        $page=$page*$limit;
-        $sql='select count(0) count from `user`';
-        $count=(new DB())->find($sql)->count;
-        $sql='select id,username,phone,email,create_time,status from `user` limit '.$page.','.$limit;
-        $result= (new DB())->query($sql);
-        $data=new stdClass();
-        $data->code=0;
-        $data->msg="";
-        $data->count=$count;
-        $data->data=$result;
+
+    public function getmemberlist()
+    {
+        $page = intval($_POST['page']) - 1;
+        $limit = intval($_POST['limit']);
+        $page = $page * $limit;
+        $sql = 'select count(0) count from `user`';
+        $count = (new DB())->find($sql)->count;
+        $sql = 'select id,username,phone,email,create_time,status from `user` limit ' . $page . ',' . $limit;
+        $result = (new DB())->query($sql);
+        $data = new stdClass();
+        $data->code = 0;
+        $data->msg = "";
+        $data->count = $count;
+        $data->data = $result;
         echo json_encode($data);
     }
 
-    public function filelist(){
+    public function filelist()
+    {
         return view('app/admin/file-list');
     }
-    public function getfilelist(){
-        $page=intval($_POST['page'])-1;
-        $limit=intval($_POST['limit']);
-        $page=$page*$limit;
-        $sql='select count(0) count from `real_file`';
-        $count=(new DB())->find($sql)->count;
-        $sql='select * from `real_file` limit '.$page.','.$limit;
-        $result= (new DB())->query($sql);
-        $data=new stdClass();
-        $data->code=0;
-        $data->msg="";
-        $data->count=$count;
-        $data->data=$result;
+
+    public function getfilelist()
+    {
+        $page = intval($_POST['page']) - 1;
+        $limit = intval($_POST['limit']);
+        $page = $page * $limit;
+        $sql = 'select count(0) count from `real_file`';
+        $count = (new DB())->find($sql)->count;
+        $sql = 'select * from `real_file` limit ' . $page . ',' . $limit;
+        $result = (new DB())->query($sql);
+        $data = new stdClass();
+        $data->code = 0;
+        $data->msg = "";
+        $data->count = $count;
+        $data->data = $result;
         echo json_encode($data);
     }
 
-    public function changeStatus(){
-        $id=$_GET['id'];
-        $status=$_GET['status'];
-        $sql='update `user` set status='.$status.' where id='.$id ;
+    public function imglist()
+    {
+        return view('app/admin/image-list');
+    }
+
+    public function getimglist()
+    {
+        $page = intval($_POST['page']) - 1;
+        $limit = intval($_POST['limit']);
+        $page = $page * $limit;
+        $sql = 'select count(0) count from `real_file` where type in (".png",".jpg",".jpeg")';
+        $count = (new DB())->find($sql)->count;
+        $sql = 'select * from `real_file` where type in (".png",".jpg",".jpeg") limit ' . $page . ',' . $limit;
+        $result = (new DB())->query($sql);
+        $data = new stdClass();
+        $data->code = 0;
+        $data->msg = "";
+        $data->count = $count;
+        $data->data = $result;
+        echo json_encode($data);
+    }
+
+    public function identify()
+    {
+
+        require_once 'services/AipImageCensor.php';
+
+        $APP_ID = '16246410';
+        $API_KEY = 'eu21LkjQaIetjExF2vTTWg7F';
+        $SECRET_KEY = 'KmiCnmN3VNjj3zi05dyYXbos5Iu6wEOr';
+        $client = new AipImageCensor($APP_ID, $API_KEY, $SECRET_KEY);
+
+        $sql = 'select * from `real_file` where type in (".png",".jpg",".jpeg")';
+        $rows = (new DB())->query($sql);
+        $yellow=array();
+        foreach ($rows as $row) {
+            do{
+                $result = $client->antiporn(file_get_contents('assets/uploads/'.$row->md5.$row->type));
+            }while(key_exists('error_code',$result));
+            if($result['conclusion']=='色情')
+                array_push($yellow,$row);
+        }
+        $data = new stdClass();
+        $data->code = 0;
+        $data->msg = "";
+        $data->count = count($yellow);
+        $data->data = $yellow;
+        echo json_encode($data);
+
+    }
+
+    public function setYellow(){
+        $md5=$_GET['md5'];
+        $sql='update `vir_file` set md5="31214026e2c9addcf1f5d69f245cf0b9",type=".png" where md5="'.$md5.'"';
+        (new DB())->query($sql);
+        //31214026e2c9addcf1f5d69f245cf0b9.png
+    }
+
+    public function changeStatus()
+    {
+        $id = $_GET['id'];
+        $status = $_GET['status'];
+        $sql = 'update `user` set status=' . $status . ' where id=' . $id;
         (new DB())->query($sql);
     }
-    public function logout(){
+
+    public function logout()
+    {
         session(null);
         session_destroy();
         return redirect('/admin/login');
     }
-    public function memberEdit(){
-        $sql='select * from `user` where id='.$_GET['id'];
-        $user= (new DB())->find($sql);
-        return view('app/admin/member-edit',compact('user'));
+
+    public function memberEdit()
+    {
+        $sql = 'select * from `user` where id=' . $_GET['id'];
+        $user = (new DB())->find($sql);
+        return view('app/admin/member-edit', compact('user'));
     }
-    public function memberEditAction(){
-        $id=$_POST['id'];
-        $phone=$_POST['phone'];
-        $username=$_POST['username'];
-        $email=$_POST['email'];
-        $sql='update `user` set phone="'.$phone.'",username="'.$username.'",email="'.$email.'" where id='.$id ;
-        $result= (new DB())->query($sql);
-        $response=new stdClass();
-        if($result){
-            $response->code=1;
-            $response->msg='编辑成功';
-        }
-        else{
-            $response->code=0;
-            $response->msg='编辑失败';
+
+    public function memberEditAction()
+    {
+        $id = $_POST['id'];
+        $phone = $_POST['phone'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $sql = 'update `user` set phone="' . $phone . '",username="' . $username . '",email="' . $email . '" where id=' . $id;
+        $result = (new DB())->query($sql);
+        $response = new stdClass();
+        if ($result) {
+            $response->code = 1;
+            $response->msg = '编辑成功';
+        } else {
+            $response->code = 0;
+            $response->msg = '编辑失败';
         }
         echo json_encode($response);
     }
-    public function memberQuery(){
-        $start=$_POST['start'];
-        $end=$_POST['end'];
-        $username=$_POST['username'];
 
-        $condition=' 1=1 ';
-        if($start)
-            $condition=$condition.' and create_time> "'.$start.'"';
-        if($end)
-            $condition=$condition.' and create_time< "'.$end.'"';
-        if($username)
-            $condition=$condition.' and username like "%'.$username.'%"';
+    public function memberQuery()
+    {
+        $start = $_POST['start'];
+        $end = $_POST['end'];
+        $username = $_POST['username'];
 
-        $page=intval($_POST['page'])-1;
-        $limit=intval($_POST['limit']);
-        $page=$page*$limit;
-        $sql='select count(0) count from `user` where'.$condition;
+        $condition = ' 1=1 ';
+        if ($start)
+            $condition = $condition . ' and create_time> "' . $start . '"';
+        if ($end)
+            $condition = $condition . ' and create_time< "' . $end . '"';
+        if ($username)
+            $condition = $condition . ' and username like "%' . $username . '%"';
+
+        $page = intval($_POST['page']) - 1;
+        $limit = intval($_POST['limit']);
+        $page = $page * $limit;
+        $sql = 'select count(0) count from `user` where' . $condition;
 
 
-        $count=(new DB())->find($sql)->count;
+        $count = (new DB())->find($sql)->count;
 
-        $sql='select id,username,phone,email,create_time,status from `user` where '.$condition.' limit '.$page.','.$limit;
-        $result= (new DB())->query($sql);
-        $data=new stdClass();
-        $data->code=0;
-        $data->msg="";
-        $data->count=$count;
-        $data->data=$result;
+        $sql = 'select id,username,phone,email,create_time,status from `user` where ' . $condition . ' limit ' . $page . ',' . $limit;
+        $result = (new DB())->query($sql);
+        $data = new stdClass();
+        $data->code = 0;
+        $data->msg = "";
+        $data->count = $count;
+        $data->data = $result;
         echo json_encode($data);
 
     }
-    public function echartUser(){
-        $db=new DB();
-        $data=array();
-        $startTime=time()-(intval(date('w')+6)*24*3600);
 
-        for($i=0;$i<7;$i++){
-            $sql='select count(0) count from `user` where create_time>"'.date("y-m-d",$startTime+$i*24*3600).'" and create_time<"'.date("y-m-d",$startTime+($i+1)*24*3600).'"';
+    public function fileQuery()
+    {
+        $start = $_POST['start'];
+        $end = $_POST['end'];
+
+        $condition = ' 1=1 ';
+        if ($start)
+            $condition = $condition . ' and createTime> "' . $start . '"';
+        if ($end)
+            $condition = $condition . ' and createTime< "' . $end . '"';
+
+        $page = intval($_POST['page']) - 1;
+        $limit = intval($_POST['limit']);
+        $page = $page * $limit;
+        $sql = 'select count(0) count from `real_file` where' . $condition;
+
+
+        $count = (new DB())->find($sql)->count;
+
+        $sql = 'select * from `real_file` where ' . $condition . ' limit ' . $page . ',' . $limit;
+        $result = (new DB())->query($sql);
+        $data = new stdClass();
+        $data->code = 0;
+        $data->msg = "";
+        $data->count = $count;
+        $data->data = $result;
+        echo json_encode($data);
+    }
+
+    public function echartUser()
+    {
+        $db = new DB();
+        $data = array();
+        $startTime = time() - (intval(date('w') + 6) * 24 * 3600);
+
+        for ($i = 0; $i < 7; $i++) {
+            $sql = 'select count(0) count from `user` where create_time>"' . date("y-m-d", $startTime + $i * 24 * 3600) . '" and create_time<"' . date("y-m-d", $startTime + ($i + 1) * 24 * 3600) . '"';
             //d($sql);
-            array_push( $data,intval( $db->find($sql)->count));
+            array_push($data, intval($db->find($sql)->count));
         }
-        $data=json_encode($data);
+        $data = json_encode($data);
 
-        $data1=array();
-        $startTime=strtotime( date('y-m-d',strtotime('-1 day')) );
+        $data1 = array();
+        $startTime = strtotime(date('y-m-d', strtotime('-1 day')));
 
-        for($i=0;$i<12;$i++){
-            $sql='select count(0) count from `user` where create_time>"'.date("y-m-d H",$startTime+$i*7200).'" and create_time<"'.date("y-m-d H",$startTime+($i+1)*7200).'"';
+        for ($i = 0; $i < 12; $i++) {
+            $sql = 'select count(0) count from `user` where create_time>"' . date("y-m-d H", $startTime + $i * 7200) . '" and create_time<"' . date("y-m-d H", $startTime + ($i + 1) * 7200) . '"';
             //d($sql);
-            array_push( $data1,intval( $db->find($sql)->count));
+            array_push($data1, intval($db->find($sql)->count));
         }
-        $data1=json_encode($data1);
+        $data1 = json_encode($data1);
 
-        return view('app/admin/echarts-user',compact('data','data1'));
+        return view('app/admin/echarts-user', compact('data', 'data1'));
     }
 }

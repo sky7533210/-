@@ -114,7 +114,7 @@
     @endif
 
     <div class="main-content">
-        <p>回收站</p>
+        <p> <i class="fa fa-trash"></i> 回收站</p>
         <section class="vfmblock tableblock ghost ghost-hidden">
             <div class="action-group">
                 <div class="btn-group">
@@ -139,29 +139,26 @@
                             </a>
                         </td>
                         <td class="mini h-filename">
-                            <span class="visible-xs sorta nowrap">
+                            <span class="visible-xs ">
                                 <i class="fa fa-sort-alpha-asc"></i>
                             </span>
-                            <span class="hidden-xs sorta nowrap">
-                                文件名                            </span>
+                            <span><i class="fa fa-file-o"> 文件名</i></span>
                         </td>
                         <td class="taglia reduce mini h-filesize hidden-xs">
-                            <span class="text-center sorta nowrap">
-                                大小                            </span>
+                            <span><i class="fa fa-adn"> 大小</i></span>
                         </td>
                         <td class="reduce mini h-filedate hidden-xs">
-                            <span class="text-center sorta nowrap">
-                                删除时间                            </span>
+                            <span><i class="fa fa-calendar"> 删除时间</i></span>
+
                         </td>
                         <td class="reduce mini h-filedate hidden-xs">
-                            <span class="text-center sorta nowrap">
-                                有效期                            </span>
+                            <span><i class="fa fa-calendar-times-o"> 有效期</i></span>
                         </td>
                         <td class="mini text-center gridview-hidden hidden-xs">
-                            <i class="fa fa-undo"></i>
+                            <i class="fa fa-undo"> 还原</i>
                         </td>
                         <td class="mini text-center gridview-hidden">
-                            <i class="fa fa-trash-o hidden-xs"></i>
+                            <i class="fa fa-trash-o hidden-xs"> 删除</i>
                             <i class="fa fa-cogs visible-xs"></i>
                         </td>
                     </tr>

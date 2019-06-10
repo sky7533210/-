@@ -136,42 +136,42 @@
                             </a>
                         </td>
                         <td class="mini h-filename">
-                        <span class="visible-xs sorta nowrap">
+                        <span class="visible-xs  ">
                             <i class="fa fa-sort-alpha-asc"></i>
                         </span>
-                            <span class="sorta nowrap hidden-xs">
-                            文件名                            </span>
+                            <span class="  hidden-xs">
+                            <i class="fa fa-file-o"></i> 文件名                            </span>
                         </td>
                         <td class="taglia reduce mini h-filesize hidden-xs">
-                        <span class="text-center sorta nowrap">
-                            浏览数                           </span>
+                        <span class="text-center  ">
+                          <i class="fa fa-eye"></i>  浏览数                           </span>
                         </td>
                         <td class="reduce mini h-filesize hidden-xs">
-                        <span class="text-center sorta nowrap">
-                            保存数                            </span>
+                        <span class="text-center  ">
+                          <i class="fa fa-save"></i> 保存数                            </span>
                         </td>
                         <td class="reduce mini h-filesize hidden-xs">
-                        <span class="text-center sorta nowrap">
-                            下载数</span>
+                        <span class="text-center  ">
+                           <i class="fa fa-download"></i> 下载数</span>
                         </td>
                         <td class="reduce mini h-filedate hidden-xs">
-                        <span class="text-center sorta nowrap">
-                            分享时间</span>
+                        <span class="text-center  ">
+                            <i class="fa fa-calendar"></i> 分享时间</span>
                         </td>
                         <td class="reduce mini h-filesize hidden-xs">
-                        <span class="text-center sorta nowrap">
-                            有效期</span>
+                        <span class="text-center  ">
+                            <i class="fa fa-calendar-times-o"></i> 有效期</span>
                         </td>
                         <td class="reduce mini h-filesize">
-                        <span class="text-center nowrap">
-                            提取码</span>
+                        <span class="text-center ">
+                            <i class="fa fa-expeditedssl"></i> 提取码 </span>
                         </td>
                         <td class="reduce mini h-filesize">
-                        <span class="text-center nowrap">
-                            链接地址</span>
+                        <span class="text-center ">
+                           <i class="fa fa-link"></i> 链接地址</span>
                         </td>
                         <td class="mini text-center gridview-hidden">
-                            <i class="fa fa-trash-o"></i>
+                            <i class="fa fa-trash-o"> 删除</i>
                         </td>
                     </tr>
                     </thead>
@@ -194,31 +194,31 @@
                                 </div>
                             </td>
 
-                            <td class="mini nowrap hidden-xs" data-order="{{$share->views}}">
+                            <td class="mini  hidden-xs" data-order="{{$share->views}}">
                             <span class="text-center">
                               {{$share->views}}
                             </span>
                             </td>
 
-                            <td class="mini nowrap hidden-xs" data-order="{{$share->saves}}">
+                            <td class="mini  hidden-xs" data-order="{{$share->saves}}">
                             <span class="text-center">
                               {{$share->saves}}
                             </span>
                             </td>
 
-                            <td class="mini nowrap hidden-xs" data-order="{{$share->downloads}}">
+                            <td class="mini  hidden-xs" data-order="{{$share->downloads}}">
                             <span class="text-center">
                               {{$share->downloads}}
                             </span>
                             </td>
 
-                            <td class="mini hidden-xs nowrap" data-order="{{ $share->start_time}}">
+                            <td class="mini hidden-xs " data-order="{{ $share->start_time}}">
                             <span class="text-center">
                               {{ $share->start_time}}
                             </span>
                             </td>
 
-                            <td class="mini hidden-xs nowrap" data-order="{{ $share->end_time}}">
+                            <td class="mini hidden-xs " data-order="{{ $share->end_time}}">
                             <span class="text-center">
                                 <?php
                                 $time = strtotime($share->end_time) - time();
@@ -234,13 +234,13 @@
                             </span>
                             </td>
 
-                            <td class="mini nowrap" data-order="{{ $share->password}}">
+                            <td class="mini " data-order="{{ $share->password}}">
                             <span class="text-center">
                               {{ $share->password}}
                             </span>
                             </td>
 
-                            <td class="mini nowrap" data-order="{{ $share->url}}">
+                            <td class="mini " data-order="{{ $share->url}}">
                             <span class="text-center">
                               {{ $share->url}}
                             </span>

@@ -69,6 +69,13 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/friend" draggable="false">
+                        <span class="hidden-sm">
+                            <strong>好友</strong>
+                        </span>
+                    </a>
+                </li>
+                <li>
                     <a href="/logout" draggable="false">
                         <i class="fa fa-sign-out fa-fw"></i>
                         <span class="hidden-sm">登出</span>
@@ -386,8 +393,8 @@
                 <thead>
                 <tr class="rowa two">
                     <td></td>
-                    <td class="mini"><span class="sorta nowrap"><i class="fa fa-sort-alpha-asc"></i></span></td>
-                    <td class="mini hidden-xs"><span class="sorta nowrap"><i class="fa fa-calendar"></i></span></td>
+                    <td class="mini"><span class="sorta"><i class="fa fa-sort-alpha-asc"></i></span></td>
+                    <td class="mini hidden-xs"><span><i class="fa fa-calendar"> 创建时间</i></span></td>
                     <td class="mini text-center visible-xs">
                         <i class="fa fa-cogs"></i>
                     </td>
@@ -421,7 +428,7 @@
                                     </span>
                             </div>
                         </td>
-                        <td class="hidden-xs mini reduce nowrap" data-order="1557248511">
+                        <td class="hidden-xs mini reduce " data-order="1557248511">
                             {{ $dir->create_time }}
                         </td>
                         <td class="text-center visible-xs">
@@ -530,19 +537,19 @@
                         </td>
                         <td class="icon"></td>
                         <td class="mini h-filename">
-                            <span class="visible-xs sorta nowrap">
+                            <span class="visible-xs sorta ">
                                 <i class="fa fa-sort-alpha-asc"></i>
                             </span>
-                            <span class="hidden-xs sorta nowrap">
-                                文件名                            </span>
+                            <span class="hidden-xs sorta ">
+                                <i class="fa fa-file-o"></i> 文件名                            </span>
                         </td>
                         <td class="taglia reduce mini h-filesize hidden-xs">
-                            <span class="text-center sorta nowrap">
-                                文件大小                            </span>
+                            <span class="text-center">
+                                <i class="fa fa-adn"></i> 文件大小                            </span>
                         </td>
                         <td class="reduce mini h-filedate hidden-xs">
-                            <span class="text-center sorta nowrap">
-                                最后修改                            </span>
+                            <span class="text-center ">
+                                <i class="fa fa-calendar"></i> 上传时间                          </span>
                         </td>
                         <td class="mini text-center gridview-hidden hidden-xs">
                             <i class="fa fa-pencil"></i>
@@ -620,7 +627,7 @@
                                 </div>
                             </td>
 
-                            <td class="mini reduce nowrap hidden-xs" data-order="6104">
+                            <td class="mini reduce  hidden-xs" data-order="6104">
                                 <span class="text-center">
                                    @if($file->size < 1024)
                                         {{$file->size}}B
@@ -632,7 +639,7 @@
                                 </span>
                             </td>
 
-                            <td class="mini reduce hidden-xs nowrap" data-order="1557248519">
+                            <td class="mini reduce hidden-xs " data-order="1557248519">
                                 <span class="text-center">
                                     {{ $file->create_time }}                            </span>
                             </td>
@@ -999,6 +1006,7 @@
         </div>
     </div>
 </div>
+
 
 <link href="/assets/js/videojs/video-js.min.css" rel="stylesheet">
 <script src="/assets/js/videojs/video.min.js"></script>

@@ -34,7 +34,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="javascript:;">乌云极简云盘</a>
+            <a class="navbar-brand" href="javascript:;">Sky云盘</a>
         </div>
     </div>
 </nav>
@@ -44,7 +44,7 @@
     <div class="container">
         <div class="head-banner text-center">
             <a href="http://www.p2.com/">
-                <img alt="乌云极简云盘" src="/assets/images/logo.png">
+                <img alt="Sky云盘" src="/assets/images/logo.png">
             </a>
         </div>
     </div> <!-- .container -->
@@ -68,6 +68,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-unlock-alt"></i> 重设密码
+                            <a href="/login" style="float: right">
+                                <i class="fa fa-sign-in"></i> 去登陆</a>
                         </div>
                         <div class="panel-body">
                             <label class="sr-only">手机</label>
@@ -103,18 +105,14 @@
                                     <input class="form-control input" id="smscode" type="text" name="smscode"
                                            placeholder="请输入短信验证码"/>
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default btn" type="button" id="btngetsmscode">
-                                            获取验证码
+                                        <button class="btn btn-default btn" type="button" id="btngetsmscode">获取验证码
                                         </button>
                                     </span>
                                 </div>
                             </div>
                             <button type="button" class="btn btn-block btn-primary" id="submit">
-                                <i class="fa fa-arrow-circle-right"></i>提交
+                                <i class="fa fa-arrow-circle-right"></i> 提交
                             </button>
-                        </div>
-                        <div class="panel-footer">
-                            输入您的手机号，发送短信验证码,输入验证码提交
                         </div>
                         <div class="mailpreload">
                             <div class="cta">
@@ -123,15 +121,13 @@
                         </div>
                     </div>
                 </form>
-                <a href="/login">
-                    <i class="fa fa-sign-in"></i> 登陆 </a>
             </div> <!-- .login -->
         </section>
     </div> <!-- .main-content -->
 </div> <!-- .container -->
 <footer class="footer">
     <div class="container">
-        <span class="pull-left">乌云网&copy; 2019</span>
+        <span class="pull-left">Sky网&copy; 2019</span>
     </div>
 </footer>
 

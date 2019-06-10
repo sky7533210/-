@@ -82,7 +82,7 @@
     <div class="container">
         <div class="head-banner text-center">
             <a href="javascript:;">
-                <img alt="乌云极简云盘" src="/assets/images/logo.png">
+                <img alt="Sky云盘" src="/assets/images/logo.png">
             </a>
         </div>
     </div> <!-- .container -->
@@ -124,18 +124,18 @@
                             </a>
                         </td>
                         <td class="mini h-filename">
-                            <span class="visible-xs sorta nowrap">
+                            <span class="visible-xs sorta ">
                                 <i class="fa fa-sort-alpha-asc"></i>
                             </span>
-                            <span class="hidden-xs sorta nowrap">
+                            <span class="hidden-xs sorta ">
                                 文件名                          </span>
                         </td>
                         <td class="taglia reduce mini h-filesize hidden-xs">
-                            <span class="text-center sorta nowrap">
+                            <span class="text-center sorta ">
                                 大小                            </span>
                         </td>
                         <td class="reduce mini h-filedate hidden-xs">
-                            <span class="text-center nowrap">
+                            <span class="text-center ">
                                 失效时间                            </span>
                         </td>
                         <td class="mini text-center gridview-hidden hidden-xs">
@@ -166,7 +166,7 @@
                                 </div>
                             </td>
 
-                            <td class="mini reduce nowrap hidden-xs" data-order="{{$file->size}}">
+                            <td class="mini reduce  hidden-xs" data-order="{{$file->size}}">
                                 <span class="text-center">
                                     @if($file->size < 1024)
                                         {{$file->size}}B
@@ -177,7 +177,7 @@
                                     @endif
                                 </span>
                             </td>
-                            <td class="mini reduce hidden-xs nowrap">
+                            <td class="mini reduce hidden-xs ">
                                 <span class="text-center">
                                   <?php
                                     $time = strtotime($endtime) - time();

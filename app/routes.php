@@ -25,6 +25,8 @@ Router::post('/register','UsersController@register_action');
 Router::post('/getsmscode','UsersController@sendSmsCode');
 Router::post('/updateinfo','UsersController@updateinfo');
 
+Router::post('/user/query','UsersController@query');
+
 
 Router::get('/home', 'FilesController@index');
 Router::post('/upload','FilesController@upload');
@@ -71,11 +73,20 @@ Router::post('/admin/memberlist','AdminController@getmemberlist');
 Router::get('/admin/filelist','AdminController@filelist');
 Router::post('/admin/filelist','AdminController@getfilelist');
 
+Router::get('/admin/imglist','AdminController@imglist');
+Router::post('/admin/imglist','AdminController@getimglist');
+Router::get('/admin/showthumb/{name}','AdminController@showthumb');
+Router::post('/admin/identify','AdminController@identify');
+Router::get('/admin/setyellow','AdminController@setYellow');
+
 Router::get('/admin/changestatus','AdminController@changeStatus');
 Router::get('/admin/membereidt','AdminController@memberEdit');
 Router::post('/admin/membereidt','AdminController@memberEditAction');
 Router::post('/admin/memberquery','AdminController@memberQuery');
+Router::post('/admin/filequery','AdminController@fileQuery');
 Router::get('/admin/echartsuser','AdminController@echartUser');
+
+Router::get('/friend','FriendController@index');
 
 //in app/routes.php 路由 /captcha
 Router::get('/captcha', function(){
