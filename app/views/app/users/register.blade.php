@@ -95,7 +95,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-user fa-fw"></i>
                                                     </span>
-                                                <input type="text" name="username" value="" id="username"
+                                                <input type="text" name="username" value="" id="username" autocomplete="off"
                                                        class="form-control"/>
                                             </div>
                                         </div>
