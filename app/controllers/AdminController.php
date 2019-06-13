@@ -57,7 +57,7 @@ class AdminController extends Controller
         $files = $db->query($sql);
         $sql = 'select * from `user`';
         $users = $db->query($sql);
-        return view('app/admin/home1', compact('name', 'files', 'users'));
+        return view('app/admin/home', compact('name', 'files', 'users'));
     }
 
     public function welcome()

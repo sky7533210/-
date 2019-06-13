@@ -76,7 +76,7 @@ function resumableJsSetup($android, $placeholder, $singleprogress,$parentid) {
 		simultaneousUploads 		: 3,
 		prioritizeFirstAndLastChunk	: true,
         query:{ parentid:$parentid },
-		// chunkSize 					: 2*1024*1024, // default 1MB (the example sets 2Mb)
+        chunkSize 					: 2*1024*1024, // default 1MB (the example sets 2Mb)
 		// maxFiles 					: 1, // uncomment this to disable multiple uploading
 		// maxFileSize 					: 10*1024*1024, // uncomment this to limit the max file size (the example sets 10Mb)
 	    minFileSizeErrorCallback:function(file, errorCount) {
@@ -143,6 +143,7 @@ function resumableJsSetup($android, $placeholder, $singleprogress,$parentid) {
         r.on('fileAdded', function(file, event){
             file=file['file'];
             browserMD5File(file, function (err, md5) {
+                console.log("-------------md5="+md5);
                 if(err==null){
                     $.ajax({
                         url: '/file/checkmd5',
@@ -159,7 +160,7 @@ function resumableJsSetup($android, $placeholder, $singleprogress,$parentid) {
                             if(response.code==1){ //需要上传
                                 r.upload();
                             }else{//不需要上传
-                                console.log('闪传成功');
+                                //console.log('闪传成功');
                                 $('.upbar p').text(100+'%');
                                 $(".upbar").width(100+'%');
                                 $('#tiperrortext').text('上传完成,请刷新一下页面');

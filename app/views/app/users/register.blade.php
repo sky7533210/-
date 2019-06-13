@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Sky云盘登录</title>
+    <title>sky drive注册</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +36,7 @@
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="javascript:;">
-                sky云盘 </a>
+                sky drive </a>
         </div>
     </div>
 </nav>
@@ -46,7 +46,7 @@
     <div class="container">
         <div class="head-banner text-center">
             <a href="javascript:;">
-                <img alt="sky云盘" src="/assets/images/logo.png">
+                <img alt="sky drive" src="/assets/images/logo.png">
             </a>
         </div>
     </div> <!-- .container -->
@@ -153,8 +153,8 @@
 </div> <!-- .container -->
 <footer class="footer">
     <div class="container">
-        <span class="pull-left"><a href="javascript:;" target="_blank">
-            Sky网 </a>
+        <span class="pull-left"><a href="javascript:;">
+            华东交通大学理工学院 rg2016-4</a>
             &copy; 2019 </span>
     </div>
 </footer>

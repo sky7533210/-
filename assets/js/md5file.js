@@ -2,21 +2,33 @@
  * Created by sky on 2019/5/9.
  */
 function browserMD5File(file,callable) {
-    var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
-        chunkSize = 2097152,                             // Read in chunks of 2MB
-        chunks = Math.ceil(file.size / chunkSize),
-        currentChunk = 0,
-        spark = new SparkMD5.ArrayBuffer(),
-        fileReader = new FileReader();
+    var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice;
+    var spark = new SparkMD5.ArrayBuffer();
+    var fileReader = new FileReader();
+    var chunkSize = Math.floor( file.size/5);
+    var currentChunk = 0;
+    var md5s=[];
 
     fileReader.onload = function (e) {
-        spark.append(e.target.result);                   // Append array buffer
-        currentChunk++;
+        if(file.size<=10*1024*1024){
+            spark.append(e.target.result);
+            callable(null,spark.end());
+        }else{
+            spark.append(e.target.result);
+            md5s.push( spark.end());
+            spark=new SparkMD5.ArrayBuffer();
+            currentChunk++;
+            if (currentChunk < 5) {
+                loadNext();
+            } else {
+                //console.log(md5s);
+                spark=new SparkMD5();
+                 for(var i=0;i<md5s.length;++i){
+                     spark.append(md5s[i]);
+                 }
+                callable(null,spark.end());
+            }
 
-        if (currentChunk < chunks) {
-            loadNext();
-        } else {
-            callable(null,spark.end());  // Compute hash
         }
     };
 
@@ -26,7 +38,7 @@ function browserMD5File(file,callable) {
 
     function loadNext() {
         var start = currentChunk * chunkSize,
-            end = ((start + chunkSize) >= file.size) ? file.size : start + chunkSize;
+            end = start+2*1024*1024;
         fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
     }
     loadNext();

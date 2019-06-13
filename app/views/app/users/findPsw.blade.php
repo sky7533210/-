@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>sky云盘找回密码</title>
+    <title>sky drive找回密码</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="javascript:;">Sky云盘</a>
+            <a class="navbar-brand" href="javascript:;">sky drive</a>
         </div>
     </div>
 </nav>
@@ -127,7 +127,9 @@
 </div> <!-- .container -->
 <footer class="footer">
     <div class="container">
-        <span class="pull-left">Sky网&copy; 2019</span>
+        <span class="pull-left">
+            <a href="javascript:;">华东交通大学理工学院 rg2016-4</a> &copy; 2019
+        </span>
     </div>
 </footer>
 

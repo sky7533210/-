@@ -1,8 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>乌云极简云盘</title>
-    <title>Sky云盘</title>
+    <title>sky drive分享已失效</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,7 +32,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="javascript:;">乌云极简云盘</a>
+            <a class="navbar-brand" href="javascript:;">sky drive</a>
         </div>
     </div>
 </nav>
@@ -42,7 +41,7 @@
     <div class="container">
         <div class="head-banner text-center">
             <a href="javascript:;">
-                <img alt="乌云极简云盘" src="/assets/images/logo.png">
+                <img alt="sky drive" src="/assets/images/logo.png">
             </a>
         </div>
     </div> <!-- .container -->
@@ -76,7 +75,8 @@
 </div> <!-- .container -->
 <footer class="footer">
     <div class="container">
-        <span class="pull-left"><a href="javascript:;" target="_blank">sky云网 </a>© 2019</span>
+        <span class="pull-left">
+            <a href="javascript:;">华东交通大学理工学院 rg2016-4</a>&copy; 2019</span>
     </div>
 </footer>
 <script src="/assets/js/jquery-1.12.4.min.js"></script>

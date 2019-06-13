@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <head>
-    <title>Sky云盘登录</title>
+    <title>sky drive 登录</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,7 +32,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="javascript:;">Sky云盘</a>
+            <a class="navbar-brand" href="javascript:;">sky drive</a>
         </div>
     </div>
 </nav>
@@ -42,7 +42,7 @@
     <div class="container">
         <div class="head-banner text-center">
             <a href="javascript:;">
-                <img alt="Sky云盘" src="/assets/images/logo.png">
+                <img alt="sky drive" src="/assets/images/logo.png">
             </a>
         </div>
     </div>
@@ -136,7 +136,7 @@
 <footer class="footer">
     <div class="container">
         <span class="pull-left">
-            SKY云网&copy; 2019
+            <a href="javascript:;">华东交通大学理工学院 rg2016-4</a> &copy; 2019
         </span>
     </div>
 </footer>
@@ -207,7 +207,8 @@
             var phone=$("#phone").val();
             sendsms(phone,"login",function (response) {
                 var data = eval("("+response+")");
-                alert(data.msg);
+                $('#tiperrortext').text(data.msg);
+                $('#error').show();
             })
         });
 

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Sky云盘</title>
+    <title>sky drive主页</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,13 +35,14 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-vfm-menu">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#collapse-vfm-menu">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="javascript:;" draggable="false">sky云盘</a>
+            <a class="navbar-brand" href="javascript:;" draggable="false">sky drive</a>
         </div>
         <div class="collapse navbar-collapse" id="collapse-vfm-menu">
             <ul class="nav navbar-nav navbar-right">
@@ -56,21 +57,21 @@
                 </li>
                 <li>
                     <a href="/share" draggable="false">
-                        <span class="hidden-sm">
+                        <span class="hidden-sm fa fa-share-alt">
                             <strong>我的分享</strong>
                         </span>
                     </a>
                 </li>
                 <li>
                     <a href="/grabage" draggable="false">
-                        <span class="hidden-sm">
+                        <span class="hidden-sm fa fa-trash">
                             <strong>回收站</strong>
                         </span>
                     </a>
                 </li>
                 <li>
-                    <a href="/friend" draggable="false">
-                        <span class="hidden-sm">
+                    <a href="/friend" target="_blank" draggable="false">
+                        <span class="hidden-sm fa fa-users">
                             <strong>好友</strong>
                         </span>
                     </a>
@@ -103,7 +104,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" >
+                <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                 </button>
                 <ul class="nav nav-pills" role="tablist">
@@ -123,7 +124,7 @@
                                 <label>
                                     手机号</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-mobile-phone fa-fw"></i></span>
                                     <input name="phone" type="text"
                                            class="form-control" value="{{$user->phone}}">
                                 </div>
@@ -141,7 +142,7 @@
                                     <input name="email" type="email"
                                            class="form-control" value="{{$user->email}}">
                                 </div>
-                                <!--<label>
+                            <!--<label>
                                     重设密码 </label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
@@ -181,7 +182,7 @@
 </div> <!-- modal -->
 <script src="/assets/js/bootstrapValidator.min.js"></script>
 <script>
-    $(function(){
+    $(function () {
         $('#modifyform').bootstrapValidator({
             message: 'This value is not valid',
             live: 'disabled',
@@ -212,43 +213,43 @@
                 email: {
                     validators: {
                         notEmpty: {
-                            message: '昵称不能为空'
+                            message: '邮箱不能为空'
                         },
-                        emailAddress:{
-                            message:'不符合邮箱地址'
+                        emailAddress: {
+                            message: '不符合邮箱地址'
                         }
                     }
                 },
                 /*newpassword: {
-                    validators: {
-                        notEmpty: {
-                            message: '密码不能为空'
-                        },
-                        identical: {
-                            field: 'renewpassword',
-                            message: '与确认新密码不同'
-                        },
-                        regexp: {//正则验证
-                            regexp: /^[a-zA-Z0-9_\.]+$/,
-                            message: '所输入的字符不符合要求'
-                        }
-                    }
-                },
-                newpassword: {
-                    validators: {
-                        notEmpty: {
-                            message: '确认新密码不能为空'
-                        },
-                        identical: {
-                            field: 'newpassword',
-                            message: '与新密码不同'
-                        },
-                        regexp: {//正则验证
-                            regexp: /^[a-zA-Z0-9_\.]+$/,
-                            message: '所输入的字符不符合要求'
-                        }
-                    }
-                },*/
+                 validators: {
+                 notEmpty: {
+                 message: '密码不能为空'
+                 },
+                 identical: {
+                 field: 'renewpassword',
+                 message: '与确认新密码不同'
+                 },
+                 regexp: {//正则验证
+                 regexp: /^[a-zA-Z0-9_\.]+$/,
+                 message: '所输入的字符不符合要求'
+                 }
+                 }
+                 },
+                 newpassword: {
+                 validators: {
+                 notEmpty: {
+                 message: '确认新密码不能为空'
+                 },
+                 identical: {
+                 field: 'newpassword',
+                 message: '与新密码不同'
+                 },
+                 regexp: {//正则验证
+                 regexp: /^[a-zA-Z0-9_\.]+$/,
+                 message: '所输入的字符不符合要求'
+                 }
+                 }
+                 },*/
                 password: {
                     validators: {
                         notEmpty: {
@@ -270,9 +271,9 @@
                     url: '/updateinfo',
                     type: 'post',
                     data: $("#modifyform").serializeArray(),
-                    dataType:"json",
+                    dataType: "json",
                     success: function (response) {
-                        var data =eval("("+response+")");
+                        var data = eval("(" + response + ")");
                         $('#tiperrortext').text(data.msg);
                         $('#error').show();
                     }
@@ -599,7 +600,7 @@
                                                 <i class="trackplay fa fa-circle-o-notch fa-spin fa-lg"></i>
                                                 <i class="trackstop fa fa-play-circle fa-lg"></i></div>';
                                             else
-                                                echo '<div class="cta"><i class="fa ' . (key_exists($file->type,$fa)? $fa[$file->type]:'fa-file-o') . ' fa-lg"></i></div>';
+                                                echo '<div class="cta"><i class="fa ' . (key_exists($file->type, $fa) ? $fa[$file->type] : 'fa-file-o') . ' fa-lg"></i></div>';
                                         } ?>
                                     </div>
                                     <div class="hover">
@@ -623,7 +624,8 @@
                                        class="full-lenght item file" draggable="false">{{ $file->name }}</a>
                                     <div class="grid-item-title">{{ $file->name }}</div>
 
-                                    <span class="hover"><a href="/file/download/{{base64_encode($file->id)}}?a=dl" class="fa fa-download fa-fw"></a></span><!--下载按钮-->
+                                    <span class="hover"><a href="/file/download/{{base64_encode($file->id)}}?a=dl"
+                                                           class="fa fa-download fa-fw"></a></span><!--下载按钮-->
                                 </div>
                             </td>
 
@@ -702,7 +704,7 @@
 </div> <!-- .container -->
 <footer class="footer">
     <div class="container">
-        <span class="pull-left">Sky云网&copy;2019</span>
+        <span class="pull-left"><a href="javascript:;">华东交通大学理工学院 rg2016-4</a> &copy; 2019</span>
     </div>
 </footer>
 <script src="/assets/js/app.min.js"></script>
@@ -916,7 +918,8 @@
                     <li><a href='#' data-dest='0' class='movelink' draggable='false'><i
                                     class='fa fa-folder-o'></i>根目录</a>
                         <?php
-                        getChild($folderTree);
+                        if ($folderTree)
+                            getChild($folderTree);
                         function getChild($next)
                         {
                             echo "<ul>";
@@ -1054,7 +1057,6 @@
             $(".vfm-zoom .fa-refresh").fadeOut();
             $(this).fadeIn();
             checkNextPrev(thisID);
-            $(".vfmlink").attr("href", baselink + thislinkencoded);
         }).each(function () {
             if (this.complete) {
                 $(this).load();

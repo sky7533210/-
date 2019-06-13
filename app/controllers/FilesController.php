@@ -96,6 +96,44 @@ class FilesController extends Controller
         return $info;
     }
 
+    public function listf($pid){
+        $db = new DB();
+        $user = session("user");
+        $dirs = $db->query('select id ,name   from `vir_file` where user_id=' . $user->id . ' and parent_id="' . $pid . '" and type="-1" and isdel=0 order by name desc');
+        $files = $db->query('select id ,name   from `vir_file` where user_id=' . $user->id . ' and parent_id="' . $pid . '" and type!="-1" and isdel=0 order by name desc');
+
+        $result=new stdClass();
+        $result->dirs=$dirs;
+        $result->files=$files;
+        echo json_encode($result);
+    }
+
+
+    public function save($id){
+        $user=session('user');
+        $sql='select * from `vir_file` where id='.$id;
+        $db=new DB();
+        $result=$db->find($sql);
+        $response=new stdClass();
+        if($result){
+            $re= $db->save('vir_file',['user_id'=>$user->id
+                ,'md5'=>$result->md5,'name'=>$result->name,'size'=>$result->size
+                ,'type'=>$result->type,'parent_id'=>0
+                ,'create_time'=>date('y-m-d H:i:s')]);
+            if($re){
+                $response->code=1;
+                $response->msg='保存成功';
+            }else{
+                $response->code=1;
+                $response->msg='保存失败';
+            }
+        }else{
+            $response->code=0;
+            $response->msg='该文件不存在';
+        }
+        echo json_encode($response);
+    }
+
 
     //get 请求用于校验此块是否已经上传
     public function checkUpload()

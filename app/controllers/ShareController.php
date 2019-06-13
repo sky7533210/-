@@ -44,8 +44,6 @@ class ShareController extends Controller
 
             if($share->keyw=='')
                 $share->keyw='无';
-            if( strtotime($share->end_time)-time()>10*365*24*3600 )
-                $share->end_time='永久';
             //计算链接地址
             $share->url= 'http://www.p.com/share/'.base64_encode($this->xor_enc($share-> keyw, 'sky'));
         }
@@ -76,16 +74,16 @@ class ShareController extends Controller
                 }
             }
 
+            $endtime=$virFile->end_time;
             if ($virFile->password == '') {
                 //查出分享的列表
                 $sql = 'select id,name,size,type from `vir_file` where id in (' . $virFile->vir_ids . ')';
                 $files = $db->query($sql);
                 $sql='update `share_file` set views=views+1 where keyw="'.$keyw.'"';
                 $db->query($sql);
-
                 $fa = $this->fontAwesome;
                 $keyw=$keyw1;
-                $endtime=$virFile->end_time;
+
 
                 return view('app/share/share', compact('endtime','files', 'fa','sharename','keyw','url','folderTree'));
             } else {
@@ -99,13 +97,14 @@ class ShareController extends Controller
 
                     $fa = $this->fontAwesome;
                     $keyw=$keyw1;
-                    return view('app/share/share', compact('files', 'fa', 'username','keyw','url'));
+
+                    return view('app/share/share', compact('endtime','files', 'fa', 'sharename','keyw','url','folderTree'));
                 }
                 else
-                    return view('app/share/sharePass', compact('keyw1','username'));
+                    return view('app/share/sharePass', compact('keyw1','sharename'));
             }
         }else{
-            return view('app/files/error');
+            return view('app/share/error');
         }
     }
 
@@ -147,7 +146,7 @@ class ShareController extends Controller
                 $endtime=strtotime('+15 year');
                 break;
         }
-        $db->save('share_file', ['keyw' => $keyw, 'user_id' => $userid,'start_time'=>date('y-m-d h:m:s') , 'end_time' => date('y-m-d h:m:s',$endtime), 'password' => $password, 'vir_ids' => $virids]);
+        $db->save('share_file', ['keyw' => $keyw, 'user_id' => $userid,'start_time'=>date('y-m-d H:i:s') , 'end_time' => date('y-m-d H:i:s',$endtime), 'password' => $password, 'vir_ids' => $virids]);
         echo base64_encode($this->xor_enc($keyw, 'sky'));
         return;
     }

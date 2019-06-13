@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Sky云盘</title>
+    <title>sky drive</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="javascript:;" draggable="false">sky云盘</a>
+            <a class="navbar-brand" href="javascript:;" draggable="false">sky drive</a>
         </div>
         <div class="collapse navbar-collapse" id="collapse-vfm-menu">
             <ul class="nav navbar-nav navbar-right">
@@ -53,14 +53,14 @@
                 </li>
                 <li>
                     <a href="/" draggable="false">
-                        <span class="hidden-sm">
+                        <span class="hidden-sm fa fa-home">
                             <strong>主页</strong>
                         </span>
                     </a>
                 </li>
                 <li>
                     <a href="/grabage" draggable="false">
-                        <span class="hidden-sm">
+                        <span class="hidden-sm fa fa-trash">
                             <strong>回收站</strong>
                         </span>
                     </a>
@@ -223,7 +223,8 @@
                                 <?php
                                 $time = strtotime($share->end_time) - time();
                                 if($time>0)
-                                    if ($time > 24 * 3600)
+                                    if ($time>10*24*3600) echo '永久';
+                                    else if ($time > 24 * 3600)
                                         echo round($time / 24 / 3600) . '天';
                                     else if ($time > 3600)
                                         echo round($time / 3600) . '小时';
@@ -268,7 +269,9 @@
 </div> <!-- .container -->
 <footer class="footer">
     <div class="container">
-        <span class="pull-left">Sky云网&copy;2019</span>
+        <span class="pull-left"><a href="javascript:;">
+            华东交通大学理工学院 rg2016-4</a>
+            &copy; 2019 </span>
     </div>
 </footer>
 

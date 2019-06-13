@@ -1,8 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>乌云极简云盘</title>
-    <title>Sky云盘</title>
+    <title>Sky drive</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,7 +32,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="javascript:;">乌云极简云盘</a>
+            <a class="navbar-brand" href="javascript:;">sky drive</a>
         </div>
     </div>
 </nav>
@@ -42,7 +41,7 @@
     <div class="container">
         <div class="head-banner text-center">
             <a href="javascript:;">
-                <img alt="乌云极简云盘" src="/assets/images/logo.png">
+                <img alt="sky drive" src="/assets/images/logo.png">
             </a>
         </div>
     </div> <!-- .container -->
@@ -65,7 +64,7 @@
             <div class="col-sm-4">
             </div>
             <div class="col-sm-4">
-                {{$username}} 分享的文件
+                {{$sharename}} 分享的文件
                 <form>
                     <div class="form-group">
                         <label for="dwnldpwd">密码</label>

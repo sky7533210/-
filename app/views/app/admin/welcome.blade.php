@@ -157,12 +157,12 @@
                 <tbody>
                 <tr>
                     <th>版权所有</th>
-                    <td>xuebingsi(xuebingsi)
-                        <a href="http://x.xuebingsi.com/" class='x-a' target="_blank">访问官网</a></td>
+                    <td>sky
+                    </td>
                 </tr>
                 <tr>
                     <th>开发者</th>
-                    <td>马志斌(113664000@qq.com)</td>
+                    <td>sky(877385084@qq.com)</td>
                 </tr>
                 </tbody>
             </table>

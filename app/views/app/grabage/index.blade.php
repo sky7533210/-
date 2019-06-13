@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Sky云盘</title>
+    <title>sky drive回收站</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="javascript:;" draggable="false">sky云盘</a>
+            <a class="navbar-brand" href="javascript:;" draggable="false">sky drive</a>
         </div>
         <div class="collapse navbar-collapse" id="collapse-vfm-menu">
             <ul class="nav navbar-nav navbar-right">
@@ -53,14 +53,14 @@
                 </li>
                 <li>
                     <a href="/share" draggable="false">
-                        <span class="hidden-sm">
+                        <span class="hidden-sm fa fa-share-alt">
                             <strong>我的分享</strong>
                         </span>
                     </a>
                 </li>
                 <li>
                     <a href="/" draggable="false">
-                        <span class="hidden-sm">
+                        <span class="hidden-sm fa fa-home">
                             <strong>主页</strong>
                         </span>
                     </a>
@@ -124,7 +124,7 @@
                     </button>
                 </div> <!-- .btn-group -->
                 <button class="btn btn-default manda multic">
-                    <i class="fa fa-paper-plane"></i>
+                    <i class="fa fa-trash-o"></i>
                     永久删除
                 </button>
             </div> <!-- .action-group -->
@@ -261,7 +261,9 @@
 </div> <!-- .container -->
 <footer class="footer">
     <div class="container">
-        <span class="pull-left">Sky云网&copy;2019</span>
+        <span class="pull-left"><a href="javascript:;">
+            华东交通大学理工学院 rg2016-4</a>
+            &copy; 2019</span>
     </div>
 </footer>
 <script src="/assets/js/app.min.js"></script>

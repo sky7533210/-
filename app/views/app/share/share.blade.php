@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Sky云盘</title>
+    <title>Sky drive</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,7 +37,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="javascript:;">sky云盘</a>
+            <a class="navbar-brand" href="javascript:;">sky drive</a>
         </div>
         <div class="collapse navbar-collapse" id="collapse-vfm-menu">
             <ul class="nav navbar-nav navbar-right">
@@ -82,7 +82,7 @@
     <div class="container">
         <div class="head-banner text-center">
             <a href="javascript:;">
-                <img alt="Sky云盘" src="/assets/images/logo.png">
+                <img alt="Sky drive" src="/assets/images/logo.png">
             </a>
         </div>
     </div> <!-- .container -->
@@ -136,7 +136,7 @@
                         </td>
                         <td class="reduce mini h-filedate hidden-xs">
                             <span class="text-center ">
-                                失效时间                            </span>
+                                有效期                            </span>
                         </td>
                         <td class="mini text-center gridview-hidden hidden-xs">
                             <i class="fa fa-save"></i>
@@ -181,7 +181,9 @@
                                 <span class="text-center">
                                   <?php
                                     $time = strtotime($endtime) - time();
-                                    if ($time > 24 * 3600)
+                                    if($time>10*24*3600)
+                                        echo '永久';
+                                    else if ($time > 24 * 3600)
                                         echo round($time / 24 / 3600) . '天';
                                     else if ($time > 3600)
                                         echo round($time / 3600) . '小时';
@@ -255,9 +257,9 @@
 </div> <!-- .container -->
 <footer class="footer">
     <div class="container">
-        <span class="pull-left"><a href="javascript:;" target="_blank">
-            sky云网 </a>
-            © 2019        </span>
+        <span class="pull-left"><a href="javascript:;">
+            华东交通大学理工学院 rg2016-4</a>
+            &copy; 2019 </span>
     </div>
 </footer>
 <script src="/assets/js/jquery-1.12.4.min.js"></script>
@@ -275,11 +277,7 @@
         "请至少选择一个文件");
     setupDownloads("{{$keyw}}");
     @if(session('user'))
-        setupSave(true,
-        "请至少选择一个文件",
-        "123",
-        "cf1c355d8e28c8ebeabf6b5dab20ea07",
-        18686983320);
+        setupSave("{{$keyw}}");
     @else
         setupLogin("{{$url}}");
     @endif
@@ -318,6 +316,7 @@
                                 }
                                 echo '</ul>';
                             }
+                            if($folderTree)
                             getChild($folderTree);
 
                             ?>

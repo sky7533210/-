@@ -97,12 +97,23 @@ class MyUploadService {
         if ($total_files_on_server_size >= $totalSize) {
             // create the final destination file
             if (($fp = fopen('assets/uploads/'.$fileId, 'w')) !== false) {
+
                 for ($i=1; $i<=$total_files; $i++) {
                     fwrite($fp, file_get_contents($temp_dir.'/'.$fileId.'.part'.$i));
                 }
                 fclose($fp);
                 //计算文件的md5并改名
-              $md5= md5_file('assets/uploads/'.$fileId);
+                if($totalSize<=10*1024*1024){
+                    $md5= md5_file('assets/uploads/'.$fileId);
+                }else{
+                    $md5s=array();
+                    $step=intval( $totalSize/5 );
+                    for ($i=0; $i<5; $i++) {
+                        array_push( $md5s, md5(    file_get_contents('assets/uploads/'.$fileId,null,null,$i*$step ,2*1024*1024 )    )  );
+                    }
+                    $md5=md5( implode($md5s));
+                }
+
 
               $pos= strrpos($fileName,'.');
                 if($pos){

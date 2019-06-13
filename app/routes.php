@@ -32,6 +32,7 @@ Router::get('/home', 'FilesController@index');
 Router::post('/upload','FilesController@upload');
 Router::post('/upload/list','FilesController@index');
 Router::get('/file/list','FilesController@fileList');
+Router::post('/file/list/{pid}','FilesController@listf');
 Router::get('/file/upload','FilesController@checkUpload');
 Router::post('/file/upload','FilesController@upload');
 Router::post('/file/checkmd5','FilesController@checkMd5');
@@ -40,6 +41,7 @@ Router::get('/file/delete','FilesController@delete');
 Router::post('/file/rename','FilesController@rename');
 Router::post('/file/move','FilesController@move');
 Router::get('/file/download/{id}','FilesController@download');
+Router::get('/file/save/{id}','FilesController@save');
 
 
 
@@ -87,6 +89,8 @@ Router::post('/admin/filequery','AdminController@fileQuery');
 Router::get('/admin/echartsuser','AdminController@echartUser');
 
 Router::get('/friend','FriendController@index');
+Router::get('/friend/apply','FriendController@apply');
+Router::get('/friend/del/{id}','FriendController@delete');
 
 //in app/routes.php 路由 /captcha
 Router::get('/captcha', function(){
