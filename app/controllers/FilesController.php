@@ -96,6 +96,15 @@ class FilesController extends Controller
         return $info;
     }
 
+    public function mfileList()
+    {
+        $parentid=$_GET['parentid'];
+        $db = new DB();
+        $user = session("user");
+        $files = $db->query('select id, name,type,create_time,size from vir_file where user_id="'.$user->id.'" and isdel=0 and parent_id='.$parentid.' order by type asc,create_time desc');
+        echo json_encode($files);
+    }
+
     public function listf($pid){
         $db = new DB();
         $user = session("user");
@@ -212,6 +221,21 @@ class FilesController extends Controller
         (new DB())->query($sql);
         return redirect('/home?parentid=' . $parentid);
     }
+    public function mdelete($id)
+    {
+        $userid = session('user')->id;
+        $sql = 'update `vir_file` set isdel=1,del_time="'.date('y-m-d H:i:s').'" where user_id=' . $userid . ' and id in(' . $id . ')';
+        $result= (new DB())->query($sql);
+        $res=new stdClass();
+        if($result){
+            $res->success=1;
+            $res->msg="删除成功";
+        }else{
+            $res->success=0;
+            $res->msg="删除失败";
+        }
+        echo json_encode($res);
+    }
 
     public function rename()
     {
@@ -225,6 +249,22 @@ class FilesController extends Controller
             (new DB())->query($sql);
         }
         redirect('/home?parentid=' . $parentid);
+    }
+    public function mrename($id)
+    {
+        $name = $_GET['name'];
+        $userid = session('user')->id;
+        $sql = 'update `vir_file` set name="' . $name . '" where user_id=' . $userid . ' and id=' . $id;
+        $result= (new DB())->query($sql);
+        $res=new stdClass();
+        if($result){
+            $res->success=1;
+            $res->msg='重命名成功';
+        }else{
+            $res->success=0;
+            $res->msg='重命名失败';
+        }
+        echo json_encode($res);
     }
 
     public function move()

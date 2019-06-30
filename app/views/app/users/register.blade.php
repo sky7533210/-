@@ -202,8 +202,7 @@
             }
             var phone = $.trim($("#phone").val());
             sendsms(phone, "reg", function (res) {
-                var data = eval("(" + res + ")");
-                $('#tiperrortext').text(data.msg);
+                $('#tiperrortext').text(res.msg);
                 $('#error').show();
             })
         });
@@ -301,12 +300,11 @@
                 },
                 dataType: "json",
                 success: function (response) {
-                    var data = eval("(" + response + ")");
                     if (data.success == 0) {
-                        $('#tiperrortext').text(data.msg);
+                        $('#tiperrortext').text(response.msg);
                         $('#error').show();
                     } else {
-                        $('#tiperrortext').text(data.msg);
+                        $('#tiperrortext').text(response.msg);
                         $('#error').show();
                     }
                 }

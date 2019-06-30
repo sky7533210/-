@@ -180,8 +180,7 @@
 
             var phone = $("#phone").val();
             sendsms(phone, "psw", function (response) {
-                var data = eval("(" + response + ")");
-                $('#tiperrortext').text(data.msg);
+                $('#tiperrortext').text(response.msg);
                 $('#error').show();
             })
         });
@@ -272,8 +271,7 @@
                 },
                 dataType: "json",
                 success: function (response) {
-                    var data = eval("(" + response + ")");
-                    $('#tiperrortext').text(data.msg);
+                    $('#tiperrortext').text(response.msg);
                     $('#error').show();
                 }
             });

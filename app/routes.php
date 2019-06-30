@@ -17,6 +17,7 @@ Router::get('/', 'FilesController@index');
 
 Router::get('/login', 'UsersController@login');
 Router::post('/login', 'UsersController@login_check');
+Router::post('/mlogin', 'UsersController@mlogin_check');
 Router::get('/logout','UsersController@logout');
 Router::get('/findpsw','UsersController@findPsw');
 Router::post('/updatepsw','UsersController@updatePsw');
@@ -38,10 +39,14 @@ Router::post('/file/upload','FilesController@upload');
 Router::post('/file/checkmd5','FilesController@checkMd5');
 Router::post('/file/createdir','FilesController@createDir');
 Router::get('/file/delete','FilesController@delete');
+Router::get('/file/mdelete/{id}','FilesController@mdelete');
 Router::post('/file/rename','FilesController@rename');
+Router::get('/file/mrename/{id}','FilesController@mrename');
 Router::post('/file/move','FilesController@move');
 Router::get('/file/download/{id}','FilesController@download');
 Router::get('/file/save/{id}','FilesController@save');
+
+Router::get('/file/mlist','FilesController@mfileList');
 
 
 

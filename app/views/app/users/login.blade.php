@@ -206,8 +206,7 @@
 
             var phone=$("#phone").val();
             sendsms(phone,"login",function (response) {
-                var data = eval("("+response+")");
-                $('#tiperrortext').text(data.msg);
+                $('#tiperrortext').text(response.msg);
                 $('#error').show();
             })
         });
